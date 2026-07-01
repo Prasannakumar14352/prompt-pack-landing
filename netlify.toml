@@ -1,0 +1,31 @@
+# Netlify config for claudepromptpack.in
+# index.html     → claudepromptpack.in/
+# international  → claudepromptpack.in/international
+
+[[redirects]]
+  from = "/international"
+  to   = "/international.html"
+  status = 200
+
+[[redirects]]
+  from = "/oto"
+  to   = "/oto.html"
+  status = 200
+
+[[redirects]]
+  from = "/in"
+  to   = "/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=3600"
+
+[[redirects]]
+  from = "/thank-you"
+  to   = "/thank-you.html"
+  status = 200

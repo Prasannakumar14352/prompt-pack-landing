@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Wait — Special One-Time Offer | PromptPack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0A0A0A;--surface:#141414;--surface2:#1C1C1C;
+  --border:#2A2A2A;--orange:#FF6B35;--orange-dim:#C0501F;
+  --white:#FFFFFF;--muted:#888888;--text:#E8E8E8;--radius:14px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,107,53,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,53,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+.container{max-width:720px;margin:0 auto;padding:0 24px;}
+
+/* ── TOP BAR ─────────────────────── */
+.top-bar{background:linear-gradient(90deg,#C0501F,#FF6B35);padding:12px 24px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;color:#fff;position:relative;z-index:99;}
+
+/* ── STEP INDICATOR ──────────────── */
+.steps{display:flex;align-items:center;justify-content:center;gap:0;padding:20px 24px;position:relative;z-index:1;border-bottom:1px solid var(--border);}
+.step-item{display:flex;align-items:center;gap:8px;font-size:0.78rem;}
+.step-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.72rem;flex-shrink:0;}
+.step-circle.done{background:var(--orange);color:#fff;}
+.step-circle.active{background:var(--orange);color:#fff;box-shadow:0 0 0 3px rgba(255,107,53,0.3);}
+.step-circle.todo{background:var(--surface2);color:#555;border:1px solid var(--border);}
+.step-label{color:#888;font-size:0.75rem;}
+.step-label.active{color:#fff;font-weight:600;}
+.step-label.done{color:var(--orange);}
+.step-line{width:40px;height:1px;background:var(--border);margin:0 8px;}
+
+/* ── HERO ─────────────────────────── */
+.oto-hero{padding:48px 24px 32px;text-align:center;position:relative;z-index:1;}
+.oto-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,107,53,0.12);border:1px solid rgba(255,107,53,0.3);color:var(--orange);font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border-radius:999px;padding:5px 14px;margin-bottom:20px;}
+.oto-headline{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-0.02em;margin-bottom:14px;}
+.oto-sub{font-size:1rem;color:var(--muted);max-width:540px;margin:0 auto;line-height:1.7;}
+
+/* ── OFFER CARD ───────────────────── */
+.offer-card{background:var(--surface);border:2px solid rgba(255,107,53,0.4);border-radius:20px;overflow:hidden;margin:36px 0;box-shadow:0 0 60px rgba(255,107,53,0.08);}
+.offer-header{background:linear-gradient(135deg,rgba(255,107,53,0.2),rgba(255,107,53,0.05));border-bottom:1px solid var(--border);padding:28px 32px;text-align:center;}
+.offer-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.offer-sub{font-size:0.85rem;color:#888;}
+.offer-body{padding:28px 32px;}
+
+/* ── WHAT'S IN THE BUNDLE ─────────── */
+.bundle-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
+@media(max-width:500px){.bundle-grid{grid-template-columns:1fr;}}
+.bundle-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;gap:12px;align-items:flex-start;}
+.bundle-icon{font-size:1.5rem;flex-shrink:0;}
+.bundle-name{font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.bundle-count{font-size:0.75rem;color:#888;}
+
+/* ── PRICING ──────────────────────── */
+.oto-price-row{text-align:center;padding:24px 0 20px;}
+.oto-original{font-size:1.1rem;color:#555;text-decoration:line-through;margin-bottom:4px;}
+.oto-price{font-family:'Space Grotesk',sans-serif;font-size:3.2rem;font-weight:800;color:var(--orange);letter-spacing:-0.02em;line-height:1;}
+.oto-price-note{font-size:0.82rem;color:#888;margin-top:6px;}
+.oto-discount-pill{display:inline-block;background:var(--orange);color:#fff;font-size:0.72rem;font-weight:700;padding:3px 12px;border-radius:999px;margin:10px 0;}
+
+/* ── BUTTONS ──────────────────────── */
+.btn-yes{width:100%;background:var(--orange);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.1rem;padding:18px;border-radius:14px;border:none;cursor:pointer;transition:background 0.2s,transform 0.15s;margin-bottom:12px;}
+.btn-yes:hover{background:var(--orange-dim);transform:translateY(-1px);}
+.btn-no{width:100%;background:transparent;color:#555;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:0.85rem;padding:12px;border-radius:14px;border:1px solid var(--border);cursor:pointer;transition:border-color 0.2s;margin-bottom:4px;}
+.btn-no:hover{border-color:#888;color:#888;}
+.btn-no-note{text-align:center;font-size:0.72rem;color:#444;margin-top:4px;}
+
+/* ── GUARANTEE ────────────────────── */
+.guarantee{background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.15);border-radius:12px;padding:16px 20px;display:flex;gap:14px;align-items:flex-start;margin:20px 0;}
+.guarantee-icon{font-size:1.8rem;flex-shrink:0;}
+.guarantee-title{font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.guarantee-body{font-size:0.8rem;color:#888;line-height:1.5;}
+
+/* ── COMPARISON ───────────────────── */
+.compare-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:0.83rem;}
+.compare-table th{padding:10px 14px;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#888;border-bottom:1px solid var(--border);}
+.compare-table td{padding:12px 14px;border-bottom:1px solid var(--surface2);color:var(--text);}
+.compare-table tr:last-child td{border-bottom:none;}
+.check{color:var(--orange);font-weight:700;}
+.cross{color:#444;}
+.highlight-col{color:var(--orange);font-weight:600;}
+
+/* ── DOWNSELL ─────────────────────── */
+.downsell{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:20px;text-align:center;display:none;}
+.downsell.show{display:block;}
+.downsell-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:8px;}
+.downsell-sub{font-size:0.83rem;color:#888;margin-bottom:16px;line-height:1.6;}
+.btn-downsell{background:var(--surface);color:var(--orange);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.9rem;padding:14px 32px;border-radius:999px;border:1px solid rgba(255,107,53,0.4);cursor:pointer;transition:background 0.2s;}
+.btn-downsell:hover{background:rgba(255,107,53,0.1);}
+
+/* ── FOOTER ───────────────────────── */
+footer{padding:32px 24px;text-align:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;margin-bottom:6px;}
+.footer-logo span{color:var(--orange);}
+</style>
+</head>
+<body>
+
+<!-- ── TOP BAR ─────────────────────────────────────────── -->
+<div class="top-bar">
+  ✅ ✅ Payment Confirmed! — One special upgrade before your download
+</div>
+
+<!-- ── STEP INDICATOR ────────────────────────────────── -->
+<div class="steps">
+  <div class="step-item">
+    <div class="step-circle done">✓</div>
+    <span class="step-label done">Order Placed</span>
+  </div>
+  <div class="step-line"></div>
+  <div class="step-item">
+    <div class="step-circle active">2</div>
+    <span class="step-label active">Special Offer</span>
+  </div>
+  <div class="step-line"></div>
+  <div class="step-item">
+    <div class="step-circle todo">3</div>
+    <span class="step-label">Download</span>
+  </div>
+</div>
+
+<!-- ── OTO HERO ──────────────────────────────────────── -->
+<div class="oto-hero">
+  <div class="oto-badge">⚡ One-Time Offer — Never Shown Again</div>
+  <h1 class="oto-headline">
+    You got the Claude Pack.<br/>
+    Now get <span style="color:var(--orange);">every AI covered.</span>
+  </h1>
+  <p class="oto-sub">
+    This offer is shown <strong style="color:#fff;">only once</strong> — to buyers who just purchased.
+    Upgrade to the <strong style="color:#fff;">Complete AI Prompt Bundle</strong> and get ChatGPT, Gemini, and Midjourney prompts added to your pack.
+  </p>
+</div>
+
+<!-- ── OFFER CARD ─────────────────────────────────────── -->
+<div class="container">
+  <div class="offer-card">
+    <div class="offer-header">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">Complete AI Prompt Bundle</div>
+      <div class="offer-title">Claude + ChatGPT + Gemini + Midjourney</div>
+      <div class="offer-sub">15,000+ prompts across 4 AI platforms. One bundle. One price.</div>
+    </div>
+    <div class="offer-body">
+
+      <!-- Bundle contents -->
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:14px;">What's in the upgrade:</div>
+      <div class="bundle-grid">
+        <div class="bundle-item">
+          <div class="bundle-icon">🤖</div>
+          <div>
+            <div class="bundle-name">Claude Prompt Pack</div>
+            <div class="bundle-count">4,560 prompts · Already yours</div>
+          </div>
+        </div>
+        <div class="bundle-item" style="border-color:rgba(255,107,53,0.3);">
+          <div class="bundle-icon">💬</div>
+          <div>
+            <div class="bundle-name">ChatGPT Prompt Pack</div>
+            <div class="bundle-count" style="color:var(--orange);">4,560 NEW prompts · Same 20 categories</div>
+          </div>
+        </div>
+        <div class="bundle-item" style="border-color:rgba(255,107,53,0.3);">
+          <div class="bundle-icon">🔷</div>
+          <div>
+            <div class="bundle-name">Gemini Prompt Pack</div>
+            <div class="bundle-count" style="color:var(--orange);">3,800 NEW prompts · Research-focused</div>
+          </div>
+        </div>
+        <div class="bundle-item" style="border-color:rgba(255,107,53,0.3);">
+          <div class="bundle-icon">🎨</div>
+          <div>
+            <div class="bundle-name">Midjourney Prompt Pack</div>
+            <div class="bundle-count" style="color:var(--orange);">2,100 NEW prompts · Image generation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison -->
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:10px;">What you get vs what you already have:</div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Claude Only</th>
+            <th class="highlight-col">Full Bundle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Claude Prompts</td><td class="check">✓ 4,560</td><td class="highlight-col">✓ 4,560</td></tr>
+          <tr><td>ChatGPT Prompts</td><td class="cross">✗</td><td class="highlight-col">✓ 4,560</td></tr>
+          <tr><td>Gemini Prompts</td><td class="cross">✗</td><td class="highlight-col">✓ 3,800</td></tr>
+          <tr><td>Midjourney Prompts</td><td class="cross">✗</td><td class="highlight-col">✓ 2,100</td></tr>
+          <tr><td>Total Prompts</td><td>4,560</td><td class="highlight-col" style="font-weight:800;font-size:1rem;">15,020</td></tr>
+          <tr><td>AI Platforms Covered</td><td>1</td><td class="highlight-col" style="font-weight:800;">4</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Price -->
+      <div class="oto-price-row">
+        <div class="oto-original" id="oto-original-price">Normally ₹2,999 if bought separately</div>
+        <div class="oto-discount-pill" id="oto-discount-pill">TODAY ONLY — 76% OFF</div>
+        <div class="oto-price" id="oto-price">₹699</div>
+        <div class="oto-price-note" id="oto-price-note">One-time upgrade. Never charged again.</div>
+      </div>
+
+      <!-- Yes button -->
+      <button class="btn-yes" id="btn-yes" onclick="handleUpgrade()">
+        ✅ Yes! Upgrade Me to the Full Bundle
+        <div style="font-size:0.78rem;font-weight:500;opacity:0.85;margin-top:3px;" id="btn-yes-sub">Add ChatGPT + Gemini + Midjourney packs for just ₹699 more</div>
+      </button>
+
+      <!-- Guarantee -->
+      <div class="guarantee">
+        <div class="guarantee-icon">🛡️</div>
+        <div>
+          <div class="guarantee-title">Same 7-Day Money Back Guarantee</div>
+          <div class="guarantee-body">Not happy with the full bundle? Email us within 7 days for a full refund on the upgrade. Zero risk.</div>
+        </div>
+      </div>
+
+      <!-- No button -->
+      <button class="btn-no" id="btn-no" onclick="showDownsell()">
+        No thanks, I only want the Claude Pack
+      </button>
+      <div class="btn-no-note">Click above to skip this offer and go to your download</div>
+
+      <!-- DOWNSELL -->
+      <div class="downsell" id="downsell">
+        <div style="font-size:1.5rem;margin-bottom:10px;">⏳</div>
+        <div class="downsell-title">Wait — how about just the ChatGPT Pack?</div>
+        <div class="downsell-sub">
+          Not ready for the full bundle? That's fine.<br/>
+          Get just the <strong style="color:#fff;">ChatGPT Prompt Pack</strong> (4,560 prompts) as a standalone add-on.
+          <br/><span id="downsell-price-text">One-time ₹299 — today only.</span>
+        </div>
+        <button class="btn-downsell" onclick="handleDownsell()">
+          Add ChatGPT Pack for <span id="downsell-btn-price">₹299</span> →
+        </button>
+        <div style="margin-top:16px;">
+          <button onclick="goToDownload()" style="background:transparent;border:none;color:#555;font-size:0.78rem;cursor:pointer;text-decoration:underline;">
+            No thanks, take me to my download
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">Prompt<span>Pack</span></div>
+  <p style="font-size:0.75rem;color:#444;margin-top:4px;">© 2026 · Not affiliated with Anthropic · Claude is a trademark of Anthropic, PBC</p>
+</footer>
+
+<!-- ── JAVASCRIPT ─────────────────────────────────────── -->
+<script>
+/* ── CONFIG ─────────────────────────────────────────── */
+const CONFIG = {
+  // Detect region from URL param: oto.html?region=india or oto.html?region=intl
+  RAZORPAY_KEY:           'rzp_live_XXXXXXXXXXXX',
+  UPSELL_AMOUNT_INR:      69900,   // ₹699 in paise
+  DOWNSELL_AMOUNT_INR:    29900,   // ₹299 in paise
+  UPSELL_AMOUNT_USD:      '19.00',
+  DOWNSELL_AMOUNT_USD:    '7.00',
+  PAYPAL_CLIENT_ID:       'YOUR_PAYPAL_CLIENT_ID',
+  DOWNLOAD_URL:           'https://prasanna36.gumroad.com/l/YOUR_MAIN_PRODUCT',
+  UPSELL_DOWNLOAD_URL:    'https://prasanna36.gumroad.com/l/YOUR_BUNDLE_PRODUCT',
+  DOWNSELL_DOWNLOAD_URL:  'https://prasanna36.gumroad.com/l/YOUR_CHATGPT_PRODUCT',
+};
+
+/* ── DETECT REGION + PLAN ───────────────────────────── */
+const params  = new URLSearchParams(window.location.search);
+const region  = params.get('region') || 'india';
+const plan    = params.get('plan')   || 'base';
+const isIndia = region === 'india';
+
+/* If buyer already purchased the bundle via bump, skip OTO and go to download */
+if (plan === 'bundle') {
+  const bundleUrl = isIndia
+    ? 'https://prasanna36.gumroad.com/l/YOUR_BUNDLE_PRODUCT'
+    : 'https://prasanna36.gumroad.com/l/YOUR_BUNDLE_PRODUCT';
+  window.location.replace(bundleUrl);
+}
+
+// Update UI for region
+if (!isIndia) {
+  document.getElementById('oto-original-price').textContent = 'Normally $39 if bought separately';
+  document.getElementById('oto-discount-pill').textContent = 'TODAY ONLY — 51% OFF';
+  document.getElementById('oto-price').textContent = '$19';
+  document.getElementById('oto-price-note').textContent = 'One-time upgrade. Never charged again.';
+  document.getElementById('btn-yes-sub').textContent = 'Add ChatGPT + Gemini + Midjourney packs for just $19 more';
+  document.getElementById('downsell-price-text').textContent = 'One-time $7 — today only.';
+  document.getElementById('downsell-btn-price').textContent = '$7';
+}
+
+/* ── UPGRADE HANDLER ────────────────────────────────── */
+function handleUpgrade() {
+  if (isIndia) {
+    const rzp = new Razorpay({
+      key:         CONFIG.RAZORPAY_KEY,
+      amount:      CONFIG.UPSELL_AMOUNT_INR,
+      currency:    'INR',
+      name:        'PromptPack',
+      description: 'Complete AI Prompt Bundle Upgrade',
+      theme:       { color: '#FF6B35' },
+      handler: function(r) {
+        window.location.href = CONFIG.UPSELL_DOWNLOAD_URL + '?upgrade=1&pid=' + r.razorpay_payment_id;
+      },
+      modal: { ondismiss: function(){} }
+    });
+    rzp.on('payment.failed', function(r){
+      alert('Payment failed: ' + r.error.description);
+    });
+    rzp.open();
+  } else {
+    loadPayPalAndPay(CONFIG.UPSELL_AMOUNT_USD, CONFIG.UPSELL_DOWNLOAD_URL);
+  }
+}
+
+/* ── DOWNSELL HANDLER ───────────────────────────────── */
+function handleDownsell() {
+  if (isIndia) {
+    const rzp = new Razorpay({
+      key:         CONFIG.RAZORPAY_KEY,
+      amount:      CONFIG.DOWNSELL_AMOUNT_INR,
+      currency:    'INR',
+      name:        'PromptPack',
+      description: 'ChatGPT Prompt Pack Add-On',
+      theme:       { color: '#FF6B35' },
+      handler: function(r) {
+        window.location.href = CONFIG.DOWNSELL_DOWNLOAD_URL + '?addon=1&pid=' + r.razorpay_payment_id;
+      },
+      modal: { ondismiss: function(){} }
+    });
+    rzp.open();
+  } else {
+    loadPayPalAndPay(CONFIG.DOWNSELL_AMOUNT_USD, CONFIG.DOWNSELL_DOWNLOAD_URL);
+  }
+}
+
+/* ── SHOW DOWNSELL ──────────────────────────────────── */
+function showDownsell() {
+  document.getElementById('downsell').classList.add('show');
+  document.getElementById('btn-no').style.display = 'none';
+  document.getElementById('downsell').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ── SKIP TO DOWNLOAD ───────────────────────────────── */
+function goToDownload() {
+  window.location.href = CONFIG.DOWNLOAD_URL;
+}
+
+/* ── PAYPAL FOR INTL ────────────────────────────────── */
+let paypalLoaded = false;
+function loadPayPalAndPay(amount, downloadUrl) {
+  if (paypalLoaded) { renderPayPal(amount, downloadUrl); return; }
+  const s = document.createElement('script');
+  s.src = `https://www.paypal.com/sdk/js?client-id=${CONFIG.PAYPAL_CLIENT_ID}&currency=USD`;
+  s.onload = function() { paypalLoaded = true; renderPayPal(amount, downloadUrl); };
+  document.body.appendChild(s);
+}
+function renderPayPal(amount, downloadUrl) {
+  const container = document.createElement('div');
+  container.id = 'paypal-oto-container';
+  container.style.margin = '16px 0';
+  document.getElementById('btn-yes').after(container);
+  paypal.Buttons({
+    style: { shape:'rect', color:'black', layout:'vertical', label:'pay', height:48 },
+    createOrder: (d, a) => a.order.create({
+      purchase_units:[{ amount:{ value: amount, currency_code:'USD' }, description:'PromptPack Upgrade' }]
+    }),
+    onApprove: (d, a) => a.order.capture().then(() => {
+      window.location.href = downloadUrl + '?orderID=' + d.orderID;
+    }),
+    onError: err => alert('Payment error. Please try again.')
+  }).render('#paypal-oto-container');
+}
+</script>
+
+</body>
+</html>

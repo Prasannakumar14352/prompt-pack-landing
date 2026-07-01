@@ -1,0 +1,255 @@
+EMAIL DELIVERY SETUP GUIDE
+claudepromptpack.in
+===================================================
+
+OVERVIEW
+--------
+After a buyer pays, two things happen automatically:
+1. They land on /thank-you with immediate download buttons
+2. An email is sent to them with the same download links
+
+This guide covers setting up the email delivery using n8n
+(which you already know) OR Make.com.
+
+===================================================
+STEP 1: HOST YOUR FILES ON GOOGLE DRIVE
+===================================================
+
+1. Upload all your product files to Google Drive:
+   - Claude Prompt Pack - 4560 Prompts.xlsx
+   - Claude Prompt Pack - 4560 Prompts.csv
+   - Bonus1_Claude_Cheat_Sheet.pdf
+   - Bonus2_Prompt_Engineering_Guide.pdf
+   - Bonus3_AI_Tools_Starter_Kit.pdf
+   - Bonus4_ChatGPT_100_Starter_Prompts.pdf
+   - ChatGPT_Prompt_Pack_2000.xlsx  (bundle only)
+   - Gemini_Prompt_Pack_1500.xlsx   (bundle only)
+   - Midjourney_Prompt_Pack_600.xlsx (bundle only)
+
+2. For each file → Right click → Share → 
+   "Anyone with the link" → Viewer → Copy link
+
+3. Convert share link to direct download link:
+   Share link:    https://drive.google.com/file/d/FILE_ID/view
+   Download link: https://drive.google.com/uc?export=download&id=FILE_ID
+
+4. Paste each download link into thank-you.html FILES object
+   and also into your email template below.
+
+===================================================
+STEP 2A: EMAIL DELIVERY VIA RAZORPAY WEBHOOK + n8n
+===================================================
+
+--- RAZORPAY WEBHOOK SETUP ---
+1. Razorpay Dashboard → Settings → Webhooks → Add New Webhook
+2. Webhook URL: https://your-n8n-instance.com/webhook/razorpay-payment
+3. Secret: create a random string, save it
+4. Events to subscribe: payment.captured
+5. Save
+
+--- n8n WORKFLOW ---
+Node 1: Webhook (POST)
+  - Path: /razorpay-payment
+  - Authentication: None (we validate signature manually)
+
+Node 2: Function (validate Razorpay signature)
+  const crypto = require('crypto');
+  const secret = 'YOUR_WEBHOOK_SECRET';
+  const body = $input.first().json.rawBody;
+  const sig = $input.first().headers['x-razorpay-signature'];
+  const expected = crypto.createHmac('sha256', secret).update(body).digest('hex');
+  if (expected !== sig) throw new Error('Invalid signature');
+  return $input.all();
+
+Node 3: Set (extract payment details)
+  - email:  {{ $json.payload.payment.entity.email }}
+  - amount: {{ $json.payload.payment.entity.amount }}
+  - name:   {{ $json.payload.payment.entity.contact }}
+  - plan:   {{ $json.payload.payment.entity.description.includes('Bundle') ? 'bundle' : 'base' }}
+
+Node 4: IF (check plan)
+  - Condition: {{ $json.plan }} equals "bundle"
+  - True path  → Send bundle email
+  - False path → Send base email
+
+Node 5a: Send Email — Gmail/SMTP (Base plan)
+  To: {{ $json.email }}
+  Subject: 🎉 Your Claude Prompt Pack is ready to download!
+  Body: [paste BASE_EMAIL_TEMPLATE from below]
+
+Node 5b: Send Email — Gmail/SMTP (Bundle plan)
+  To: {{ $json.email }}
+  Subject: 🚀 Your Complete AI Bundle is ready — 8,360+ prompts inside!
+  Body: [paste BUNDLE_EMAIL_TEMPLATE from below]
+
+--- EMAIL TEMPLATES ---
+
+BASE_EMAIL_TEMPLATE (plain text):
+---
+Subject: 🎉 Your Claude Prompt Pack is ready!
+
+Hi there,
+
+Your purchase is confirmed. Here are your download links:
+
+MAIN PRODUCT
+📊 Claude Prompt Pack (Excel): GOOGLE_DRIVE_LINK_CLAUDE_XLSX
+📋 Claude Prompt Pack (CSV):   GOOGLE_DRIVE_LINK_CLAUDE_CSV
+
+FREE BONUSES
+📋 Bonus 1 — Claude Cheat Sheet:          GOOGLE_DRIVE_LINK_BONUS1
+⚡ Bonus 2 — Prompt Engineering Guide:    GOOGLE_DRIVE_LINK_BONUS2
+🛠️ Bonus 3 — AI Tools Starter Kit:        GOOGLE_DRIVE_LINK_BONUS3
+🤖 Bonus 4 — ChatGPT 100 Starter Prompts: GOOGLE_DRIVE_LINK_BONUS4
+
+QUICK START:
+1. Open the Excel file in Google Sheets or Microsoft Excel
+2. Click any category on the Index tab → jumps to that sheet
+3. Find your prompt, fill [BRACKETS] with your details
+4. Paste into Claude at claude.ai → done
+
+Your download links never expire. Bookmark this email.
+
+Questions? Reply to this email or contact support@claudepromptpack.in
+7-day money back guarantee still applies.
+
+— PromptPack Team
+claudepromptpack.in
+---
+
+BUNDLE_EMAIL_TEMPLATE (plain text):
+---
+Subject: 🚀 Your Complete AI Bundle is ready — 8,360+ prompts inside!
+
+Hi there,
+
+Your Complete AI Bundle purchase is confirmed.
+You now have prompts for all 4 major AI platforms.
+
+CLAUDE PROMPT PACK (4,560 prompts)
+📊 Excel: GOOGLE_DRIVE_LINK_CLAUDE_XLSX
+📋 CSV:   GOOGLE_DRIVE_LINK_CLAUDE_CSV
+
+CHATGPT PROMPT PACK (2,000 prompts)
+💬 Excel: GOOGLE_DRIVE_LINK_CHATGPT_XLSX
+
+GEMINI PROMPT PACK (1,500 prompts)
+🔷 Excel: GOOGLE_DRIVE_LINK_GEMINI_XLSX
+
+MIDJOURNEY PROMPT PACK (600 image prompts)
+🎨 Excel: GOOGLE_DRIVE_LINK_MIDJOURNEY_XLSX
+
+FREE BONUSES (4 PDFs)
+📋 Cheat Sheet:              GOOGLE_DRIVE_LINK_BONUS1
+⚡ Prompt Engineering Guide: GOOGLE_DRIVE_LINK_BONUS2
+🛠️ AI Tools Starter Kit:     GOOGLE_DRIVE_LINK_BONUS3
+🤖 ChatGPT 100 Prompts:      GOOGLE_DRIVE_LINK_BONUS4
+
+Total: 8,360 prompts across 4 AI platforms.
+
+Questions? support@claudepromptpack.in
+
+— PromptPack Team
+claudepromptpack.in
+---
+
+===================================================
+STEP 2B: EMAIL DELIVERY VIA PAYPAL WEBHOOK + n8n
+===================================================
+
+--- PAYPAL WEBHOOK SETUP ---
+1. PayPal Developer Dashboard → My Apps → Your App → Webhooks
+2. Add webhook URL: https://your-n8n.com/webhook/paypal-payment
+3. Events: PAYMENT.CAPTURE.COMPLETED
+4. Save
+
+--- n8n WORKFLOW ---
+Node 1: Webhook (POST) — path: /paypal-payment
+
+Node 2: HTTP Request (verify with PayPal)
+  URL: https://api.paypal.com/v1/notifications/verify-webhook-signature
+  Method: POST
+  Auth: Bearer YOUR_PAYPAL_ACCESS_TOKEN
+  Body: {
+    "transmission_id": "{{ $json.headers['paypal-transmission-id'] }}",
+    "transmission_time": "{{ $json.headers['paypal-transmission-time'] }}",
+    "cert_url": "{{ $json.headers['paypal-cert-url'] }}",
+    "auth_algo": "{{ $json.headers['paypal-auth-algo'] }}",
+    "transmission_sig": "{{ $json.headers['paypal-transmission-sig'] }}",
+    "webhook_id": "YOUR_WEBHOOK_ID",
+    "webhook_event": {{ $json.body }}
+  }
+
+Node 3: IF — verification_status = SUCCESS
+
+Node 4: Set (extract details)
+  - email:  {{ $json.body.resource.payer.email_address }}
+  - name:   {{ $json.body.resource.payer.name.given_name }}
+  - amount: {{ $json.body.resource.amount.value }}
+  - plan:   {{ parseFloat($json.body.resource.amount.value) >= 19 ? 'bundle' : 'base' }}
+
+Node 5: IF plan = bundle → Send bundle email, else send base email
+
+(same email templates as above)
+
+===================================================
+STEP 2C: MAKE.COM ALTERNATIVE (simpler)
+===================================================
+
+1. Make.com → Create new scenario
+2. Add module: Webhooks → Custom webhook
+3. Copy the webhook URL
+4. In Razorpay: paste this as your webhook URL
+5. Add module: Gmail → Send email
+6. Map: to = payment.entity.email
+         subject = "Your Claude Prompt Pack is ready!"
+         content = [email template with links]
+7. Add a Router for plan type
+8. Activate scenario
+
+===================================================
+STEP 3: TEST YOUR SETUP
+===================================================
+
+1. Make a test payment of ₹1 (use Razorpay test mode)
+2. Check: does thank-you page load with download buttons?
+3. Check: did you receive the email within 60 seconds?
+4. Check: do all download links work?
+5. Switch Razorpay to live mode
+6. Make one real ₹399 purchase yourself to confirm end-to-end
+
+===================================================
+STEP 4: GOOGLE DRIVE LINKS — PASTE HERE
+===================================================
+(Fill these in after uploading to Google Drive)
+
+claude_xlsx:     https://drive.google.com/uc?export=download&id=___
+claude_csv:      https://drive.google.com/uc?export=download&id=___
+bonus1:          https://drive.google.com/uc?export=download&id=___
+bonus2:          https://drive.google.com/uc?export=download&id=___
+bonus3:          https://drive.google.com/uc?export=download&id=___
+bonus4:          https://drive.google.com/uc?export=download&id=___
+chatgpt_xlsx:    https://drive.google.com/uc?export=download&id=___
+gemini_xlsx:     https://drive.google.com/uc?export=download&id=___
+midjourney_xlsx: https://drive.google.com/uc?export=download&id=___
+
+===================================================
+SECURITY NOTES
+===================================================
+
+- Google Drive "Anyone with link" links are unguessable but not
+  truly private. For a ₹399 product this is acceptable.
+  
+- If you want stronger protection, use a signed URL service
+  (AWS S3 pre-signed URLs, Cloudflare R2) — ask me to set this up
+  if needed.
+
+- Do NOT put download links in the public landing page HTML.
+  They should only appear on the thank-you page (after payment).
+
+- The thank-you page URL itself (/thank-you?plan=base) is guessable,
+  but without your actual Google Drive links in it, it's just an empty page.
+  The links are populated from FILES object in the JS — which is in the page.
+  So the real protection is the unguessable Google Drive file IDs.
+
+===================================================
