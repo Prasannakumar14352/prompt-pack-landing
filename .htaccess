@@ -1,4 +1,0 @@
-RewriteEngine On
-
-RewriteRule ^india/?$ promptspackindia.html [L]
-RewriteRule ^international/?$ promptspackinternational.html [L]
