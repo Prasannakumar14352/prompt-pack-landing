@@ -1,35 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prompt Pack Landing</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            gap: 12px;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Claude Prompt Pack — Ready-to-Use AI Prompt Packs | claudepromptpack.in</title>
+<meta name="description" content="Ready-to-use prompt packs for Claude AI. 4,560 prompts across 20 categories. Copy, fill the blanks, paste. Instant download. Available in ₹ (India) and $ (International)."/>
+<meta property="og:title" content="Claude Prompt Pack — Ready-to-Use AI Prompt Packs"/>
+<meta property="og:description" content="4,560 prompts across 20 categories. Copy, fill the blanks, paste. Instant download."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://claudepromptpack.in/"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & BASE ─────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#0A0A0A;color:#E8E8E8;line-height:1.6;overflow-x:hidden}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid #FF6B35;outline-offset:3px;border-radius:4px}
 
-        button {
-            padding: 10px 16px;
-            border: 1px solid #ccc;
-            background: #f5f5f5;
-            cursor: pointer;
-            border-radius: 6px;
-        }
+/* ── TOKENS (shared with product pages) ───────────────── */
+:root{
+  --bg:#0A0A0A;--s1:#141414;--s2:#1C1C1C;--s3:#242424;
+  --border:#2A2A2A;--border2:#333;
+  --or:#FF6B35;--or2:#C0501F;--or3:rgba(255,107,53,.15);
+  --wh:#FFFFFF;--tx:#E8E8E8;--mu:#888;--su:#555;
+  --gold:#F5C842;--green:#00B07C;
+  --rd:14px;--rd2:9px;
+}
 
-        button:hover {
-            background: #e9e9e9;
-        }
-    </style>
+/* ── BACKGROUND GRID ──────────────────────────────────── */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,107,53,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,53,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+/* ── NAV ──────────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.05rem;color:var(--wh);letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
+.logo-mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--or),var(--or2));display:grid;place-items:center;font-size:.8rem;color:#fff}
+.nav-tag{font-size:.75rem;color:var(--mu);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+@media(max-width:560px){.nav-tag{display:none}}
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero{padding:72px 0 40px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--or);border:1px solid rgba(255,107,53,.3);border-radius:999px;padding:6px 15px;margin-bottom:22px}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(34px,5.6vw,60px);font-weight:800;color:var(--wh);letter-spacing:-.03em;line-height:1.08;margin-bottom:18px}
+h1 .hl{color:var(--or)}
+.sub{font-size:clamp(15px,2vw,18px);color:var(--mu);max-width:620px;margin:0 auto 14px}
+.sub b{color:var(--tx);font-weight:600}
+
+/* ── STATS STRIP ──────────────────────────────────────── */
+.stats{display:flex;justify-content:center;gap:clamp(20px,5vw,56px);padding:26px 0 10px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat b{display:block;font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,3vw,30px);font-weight:800;color:var(--wh);letter-spacing:-.02em}
+.stat span{font-size:.72rem;color:var(--mu);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+
+/* ── FEATURED PRODUCT CARD ────────────────────────────── */
+.shelf-label{display:flex;align-items:center;gap:14px;margin:52px 0 18px;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mu)}
+.shelf-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.featured{background:linear-gradient(180deg,var(--s1),var(--s2));border:1px solid var(--border2);border-radius:var(--rd);overflow:hidden;position:relative}
+.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--or),var(--gold))}
+.feat-head{padding:clamp(26px,4vw,40px) clamp(22px,4vw,44px) 8px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.feat-icon{width:56px;height:56px;border-radius:14px;background:var(--or3);border:1px solid rgba(255,107,53,.35);display:grid;place-items:center;font-size:1.5rem;flex-shrink:0}
+.feat-meta{flex:1;min-width:240px}
+.badge-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.badge{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.badge.hot{background:var(--or3);color:var(--or);border:1px solid rgba(255,107,53,.35)}
+.badge.new{background:rgba(0,176,124,.12);color:var(--green);border:1px solid rgba(0,176,124,.3)}
+.feat-meta h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,3vw,27px);font-weight:700;color:var(--wh);letter-spacing:-.02em}
+.feat-meta p{font-size:.92rem;color:var(--mu);margin-top:5px;max-width:560px}
+.feat-points{display:flex;gap:8px 20px;flex-wrap:wrap;padding:14px clamp(22px,4vw,44px) 22px;font-size:.83rem;color:var(--mu)}
+.feat-points span{display:inline-flex;align-items:center;gap:7px}
+.feat-points i{color:var(--green);font-style:normal;font-weight:700}
+
+/* ── REGION SPLIT (signature) ─────────────────────────── */
+.split{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border)}
+@media(max-width:640px){.split{grid-template-columns:1fr}}
+.region{display:block;padding:clamp(22px,3.5vw,30px) clamp(22px,4vw,44px);position:relative;transition:background .25s ease;border-left:3px solid transparent}
+.region+.region{border-top:0;border-left:3px solid transparent}
+@media(min-width:641px){.region+.region{border-left:1px solid var(--border)}}
+@media(max-width:640px){.region+.region{border-top:1px solid var(--border)}}
+.region:hover{background:var(--s3)}
+.region:hover .go{transform:translateX(4px);color:var(--or)}
+.reg-flag{font-size:1.3rem;margin-bottom:8px;display:block}
+.reg-name{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:var(--wh);display:flex;align-items:center;gap:10px}
+.rec{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(245,200,66,.4);border-radius:999px;padding:2px 8px;display:none}
+.region.recommended .rec{display:inline-block}
+.reg-price{margin:10px 0 4px;display:flex;align-items:baseline;gap:9px}
+.reg-price b{font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:800;color:var(--wh);letter-spacing:-.02em}
+.reg-price s{color:var(--su);font-size:.95rem}
+.reg-note{font-size:.78rem;color:var(--mu)}
+.go{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:.85rem;font-weight:700;color:var(--tx);transition:transform .25s ease,color .25s ease}
+.go svg{width:15px;height:15px}
+
+/* ── COMING SOON SHELF ────────────────────────────────── */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.soon{background:var(--s1);border:1px dashed var(--border2);border-radius:var(--rd);padding:26px 26px 24px;position:relative}
+.soon .badge{position:absolute;top:18px;right:18px;background:var(--s3);color:var(--mu);border:1px solid var(--border2)}
+.soon-icon{width:44px;height:44px;border-radius:11px;background:var(--s3);display:grid;place-items:center;font-size:1.15rem;margin-bottom:14px;opacity:.85}
+.soon h3{font-family:'Space Grotesk',sans-serif;font-size:1.02rem;font-weight:700;color:var(--tx);letter-spacing:-.01em}
+.soon p{font-size:.84rem;color:var(--mu);margin-top:5px}
+
+/* ── TRUST ────────────────────────────────────────────── */
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:56px}
+.t-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--rd2);padding:18px 20px;display:flex;gap:13px;align-items:flex-start}
+.t-icon{font-size:1.1rem;line-height:1.4}
+.t-card b{display:block;font-size:.88rem;color:var(--wh);font-weight:600}
+.t-card span{font-size:.78rem;color:var(--mu)}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer{margin-top:72px;border-top:1px solid var(--border);padding:30px 0 40px;position:relative;z-index:1}
+.foot-in{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--su)}
+.foot-links{display:flex;gap:18px}
+.foot-links a:hover{color:var(--tx)}
+
+/* ── MOTION ───────────────────────────────────────────── */
+.rise{opacity:0;transform:translateY(14px);animation:rise .6s ease forwards}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}.d4{animation-delay:.32s}
+@keyframes rise{to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}.pulse{animation:none}}
+</style>
 </head>
 <body>
-    <button onclick="window.location.href='promptspackindia'">India</button>
-    <button onclick="window.location.href='promptspackinternational'">International</button>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="/"><span class="logo-mark">⌘</span>ClaudePromptPack<span style="color:var(--or)">.in</span></a>
+    <span class="nav-tag">AI Prompt Packs · Instant Download</span>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="eyebrow rise"><span class="pulse"></span>Instant digital delivery</div>
+  <h1 class="rise d1">Stop writing prompts.<br/><span class="hl">Start copy-pasting results.</span></h1>
+  <p class="sub rise d2">Battle-tested prompt packs for Claude AI. <b>Copy → fill the blanks → paste.</b> Get expert-level output in 30 seconds — no prompt engineering required.</p>
+  <div class="stats rise d3">
+    <div class="stat"><b>4,560</b><span>Prompts</span></div>
+    <div class="stat"><b>20</b><span>Categories</span></div>
+    <div class="stat"><b>30 sec</b><span>To first result</span></div>
+    <div class="stat"><b>One-time</b><span>Payment</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="shelf-label rise d3">Available now</div>
+
+  <article class="featured rise d4">
+    <div class="feat-head">
+      <div class="feat-icon">📦</div>
+      <div class="feat-meta">
+        <div class="badge-row"><span class="badge hot">Bestseller</span><span class="badge new">Lifetime access</span></div>
+        <h2>The Claude Prompt Pack — 4,560 Prompts</h2>
+        <p>Every prompt is a fill-in-the-blank template across marketing, business, coding, content, career, and 15 more categories. Excel + PDF formats, yours forever.</p>
+      </div>
+    </div>
+    <div class="feat-points">
+      <span><i>✓</i> 20 ready categories</span>
+      <span><i>✓</i> Fill-in-the-blank templates</span>
+      <span><i>✓</i> Excel + PDF download</span>
+      <span><i>✓</i> Free lifetime updates</span>
+    </div>
+
+    <div class="split">
+      <a class="region" id="reg-in" href="/promptspackindia">
+        <span class="reg-flag">🇮🇳</span>
+        <span class="reg-name">India Edition <span class="rec">Recommended for you</span></span>
+        <span class="reg-price"><b>₹399</b><s>₹999</s></span>
+        <span class="reg-note">Pay with UPI, cards & netbanking via Razorpay</span>
+        <span class="go">Get the India pack <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="region" id="reg-intl" href="/promptspackinternational">
+        <span class="reg-flag">🌍</span>
+        <span class="reg-name">International Edition <span class="rec">Recommended for you</span></span>
+        <span class="reg-price"><b>$9</b><s>$29</s></span>
+        <span class="reg-note">Pay with PayPal or any major card</span>
+        <span class="go">Get the international pack <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+
+  <div class="shelf-label" style="margin-top:56px">Coming soon</div>
+  <div class="grid">
+    <div class="soon">
+      <span class="badge">In production</span>
+      <div class="soon-icon">🤖</div>
+      <h3>ChatGPT Prompt Pack</h3>
+      <p>The same fill-in-the-blank system, tuned for ChatGPT workflows.</p>
+    </div>
+    <div class="soon">
+      <span class="badge">Planned</span>
+      <div class="soon-icon">🎬</div>
+      <h3>AI Video Prompt Pack</h3>
+      <p>Scene-by-scene prompts for AI video tools — hooks, scripts, shot lists.</p>
+    </div>
+    <div class="soon">
+      <span class="badge">Planned</span>
+      <div class="soon-icon">⚙️</div>
+      <h3>Automation Templates</h3>
+      <p>Plug-and-play n8n & Make.com workflows for creators and sellers.</p>
+    </div>
+  </div>
+
+  <div class="trust">
+    <div class="t-card"><span class="t-icon">⚡</span><div><b>Instant delivery</b><span>Download link on the thank-you page, right after payment</span></div></div>
+    <div class="t-card"><span class="t-icon">🔒</span><div><b>Secure checkout</b><span>Razorpay for India, PayPal for international buyers</span></div></div>
+    <div class="t-card"><span class="t-icon">💳</span><div><b>One-time payment</b><span>No subscriptions, no hidden charges — pay once, keep forever</span></div></div>
+    <div class="t-card"><span class="t-icon">🔄</span><div><b>Free updates</b><span>New prompts added to your pack at no extra cost</span></div></div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 claudepromptpack.in · All rights reserved</span>
+    <div class="foot-links">
+      <a href="/promptspackindia">India</a>
+      <a href="/promptspackinternational">International</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Highlight the recommended edition based on the visitor's locale/timezone (no external API)
+(function(){
+  try{
+    var tz=(Intl.DateTimeFormat().resolvedOptions().timeZone||'');
+    var lang=(navigator.language||'').toLowerCase();
+    var isIndia=/calcutta|kolkata/i.test(tz)||/-in\b/.test(lang);
+    document.getElementById(isIndia?'reg-in':'reg-intl').classList.add('recommended');
+  }catch(e){}
+})();
+</script>
+
 </body>
 </html>
