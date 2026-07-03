@@ -37,7 +37,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .nav-in{max-width:1080px;margin:0 auto;padding:0 20px;height:62px;display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:10px}
-.brand .mark{width:200px;height:100px;flex-shrink:0}
+.brand .mark{width:32px;height:32px;flex-shrink:0}
 .brand .word{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.15rem;color:var(--wh);letter-spacing:-.02em}
 .brand .word span{color:var(--or)}
 .nav-note{font-size:.72rem;color:var(--mu);display:none}
@@ -135,14 +135,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--or);outline-offset:
 <nav>
   <div class="nav-in">
     <a class="brand" href="/" aria-label="ProdXStore home">
-      <!-- <svg class="mark" viewBox="0 0 512 512" aria-hidden="true">
-        <rect width="512" height="512" rx="110" fill="#141414"/>
-        <rect x="1.5" y="1.5" width="509" height="509" rx="108" fill="none" stroke="rgba(255,107,53,.35)" stroke-width="3"/>
-        <g transform="rotate(45 256 256)"><rect x="106" y="224" width="300" height="64" fill="#FFFFFF"/></g>
-        <g transform="rotate(-45 256 256)"><rect x="106" y="224" width="300" height="64" fill="#FF6B35"/></g>
-      </svg>
-      <span class="word">prod<span>x</span>store</span> -->
-      <img class="mark" src="/logo.png" alt="" width="32" height="32"/>
+      <img src="/assets/logo-nav.png" alt="ProdXStore" style="height:34px;width:auto"/>
     </a>
     <div class="nav-note">Instant download · Lifetime access</div>
   </div>
@@ -176,7 +169,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--or);outline-offset:
       </div>
 
       <div class="doors">
-        <a class="door" id="door-in" href="/promptspackindia">
+        <a class="door" id="door-in" href="https://claudepromptpack.in/promptspackindia">
           <span class="reco">Recommended for you</span>
           <div class="flag">🇮🇳</div>
           <h3>India</h3>
@@ -185,7 +178,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--or);outline-offset:
           <span class="go">View offer →</span>
         </a>
 
-        <a class="door" id="door-intl" href="/promptspackinternational">
+        <a class="door" id="door-intl" href="https://claudepromptpack.in/promptspackinternational">
           <span class="reco">Recommended for you</span>
           <div class="flag">🌍</div>
           <h3>International</h3>
@@ -273,12 +266,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--or);outline-offset:
 
 <footer>
   <div class="f-brand">
-    <svg class="mark" viewBox="0 0 512 512" aria-hidden="true">
-      <rect width="512" height="512" rx="110" fill="#141414"/>
-      <g transform="rotate(45 256 256)"><rect x="86" y="218" width="340" height="76" fill="#FFFFFF"/></g>
-      <g transform="rotate(-45 256 256)"><rect x="86" y="218" width="340" height="76" fill="#FF6B35"/></g>
-    </svg>
-    <span class="word">prod<span>x</span>store</span>
+    <img src="/assets/logo-full.png" alt="ProdXStore — Digital Products Marketplace" style="height:64px;width:auto"/>
   </div>
   <div class="f-links">
     <a href="https://claudepromptpack.in/promptspackindia">Claude Pack — India</a>
