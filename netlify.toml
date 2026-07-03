@@ -1,6 +1,6 @@
-# Netlify config for claudepromptpack.in
-# index.html     → claudepromptpack.in/
-# international  → claudepromptpack.in/international
+# Netlify config for prodxstore.com
+# index.html     → prodxstore.com/
+# international  → prodxstore.com/international
 
 [[redirects]]
   from = "/international"
