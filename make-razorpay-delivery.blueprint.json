@@ -1,0 +1,160 @@
+{
+  "name": "Razorpay → Product Delivery Email",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {
+        "hook": "RAZORPAY_DELIVERY_HOOK",
+        "maxResults": 1
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": { "x": 0, "y": 0 },
+        "restore": {
+          "parameters": {
+            "hook": { "label": "Razorpay Delivery Webhook" }
+          }
+        },
+        "notes": "Create this webhook in Make (Webhooks > Custom webhook), copy its URL into Razorpay Dashboard > Settings > Webhooks with event payment.captured."
+      }
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "mapper": null,
+      "metadata": { "designer": { "x": 300, "y": 0 } },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 3,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "filter": {
+                "name": "Bundle purchase",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.event}}",
+                      "b": "payment.captured",
+                      "o": "text:equal"
+                    },
+                    {
+                      "a": "{{ifempty(1.payload.payment.entity.notes.plan; if(1.payload.payment.entity.amount / 100 >= 699; \"bundle\"; \"base\"))}}",
+                      "b": "bundle",
+                      "o": "text:equal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "variables": [
+                  { "name": "email", "value": "{{1.payload.payment.entity.email}}" },
+                  { "name": "name", "value": "{{ifempty(1.payload.payment.entity.notes.name; \"there\")}}" },
+                  { "name": "order_id", "value": "{{ifempty(1.payload.payment.entity.order_id; 1.payload.payment.entity.id)}}" }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": { "designer": { "x": 600, "y": -150 } }
+            },
+            {
+              "id": 4,
+              "module": "email:ActionSendEmail",
+              "version": 6,
+              "parameters": { "account": "SMTP_ACCOUNT_ID" },
+              "mapper": {
+                "to": ["{{3.email}}"],
+                "subject": "🚀 Your Complete AI Bundle is ready — download inside",
+                "contentType": "html",
+                "html": "PASTE_CONTENTS_OF_delivery-email-bundle.html_HERE",
+                "from": "productsupport@prodxstore.com",
+                "replyTo": "productsupport@prodxstore.com",
+                "sender": "ProdXStore"
+              },
+              "metadata": {
+                "designer": { "x": 900, "y": -150 },
+                "notes": "Connect a Brevo/Zoho SMTP account. Paste the rendered HTML of delivery-email-bundle.html (with real Drive FILE IDs) into the html field."
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 5,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "filter": {
+                "name": "Base purchase",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.event}}",
+                      "b": "payment.captured",
+                      "o": "text:equal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "variables": [
+                  { "name": "email", "value": "{{1.payload.payment.entity.email}}" },
+                  { "name": "name", "value": "{{ifempty(1.payload.payment.entity.notes.name; \"there\")}}" },
+                  { "name": "order_id", "value": "{{ifempty(1.payload.payment.entity.order_id; 1.payload.payment.entity.id)}}" }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": { "designer": { "x": 600, "y": 150 } }
+            },
+            {
+              "id": 6,
+              "module": "email:ActionSendEmail",
+              "version": 6,
+              "parameters": { "account": "SMTP_ACCOUNT_ID" },
+              "mapper": {
+                "to": ["{{5.email}}"],
+                "subject": "🎉 Your Claude Prompt Pack is ready — download inside",
+                "contentType": "html",
+                "html": "PASTE_CONTENTS_OF_delivery-email-base.html_HERE",
+                "from": "productsupport@prodxstore.com",
+                "replyTo": "productsupport@prodxstore.com",
+                "sender": "ProdXStore"
+              },
+              "metadata": {
+                "designer": { "x": 900, "y": 150 },
+                "notes": "Connect a Brevo/Zoho SMTP account. Paste the rendered HTML of delivery-email-base.html (with real Drive FILE IDs) into the html field."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    },
+    "designer": { "orphans": [] },
+    "zone": "eu1.make.com",
+    "notes": [
+      "IMPORTANT: Router evaluates routes top-to-bottom. Bundle route is FIRST so bundle buyers do not also match the base route. Base route is the catch-all for every other payment.captured event.",
+      "Plan detection: reads notes.plan from Razorpay payment; falls back to amount >= 699 = bundle.",
+      "Replace SMTP_ACCOUNT_ID by selecting your connected email account in each Send Email module.",
+      "Replace the html placeholder text in both Send Email modules with the actual email HTML."
+    ]
+  }
+}

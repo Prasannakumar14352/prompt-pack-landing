@@ -12,8 +12,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet" />
-  <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
-  <script src="https://gumroad.com/js/gumroad.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- <script src="https://gumroad.com/js/gumroad.js"></script> -->
   <style>
     /* ── RESET & BASE ────────────────────────────────────── */
     *,
@@ -2248,7 +2248,7 @@
   </div>
 
   <!-- ── JS ─────────────────────────────────────────────── -->
-  <script>
+  <!-- <script>
     const CFG = {
       BASE_GUMROAD: 'https://prasanna6.gumroad.com/l/claude-prompt-pack?wanted=true',
       BUNDLE_GUMROAD: 'https://prasanna6.gumroad.com/l/complete-ai-bundle?wanted=true'
@@ -2284,91 +2284,91 @@
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
+  </script> -->
+
+  <script>
+    /* CONFIG — fill before going live */
+    const CFG = {
+      RZP_KEY: 'rzp_live_T8jX1lnAXiaVnH',
+      BASE_AMOUNT: 29900,   // ₹299 — Claude Pack
+      BUMP_AMOUNT: 49900,   // ₹499 — Complete Bundle
+      BASE_DOWNLOAD: '/promptspackthank-you?region=india&plan=base',
+      BUMP_DOWNLOAD: '/promptspackthank-you?region=india&plan=bundle',
+    };
+
+    let bumpActive = false;
+
+    /* ORDER BUMP TOGGLE */
+    function toggleBump(chk) {
+      bumpActive = chk.checked;
+      const btn = document.getElementById('main-pay-btn');
+      const tot = document.getElementById('price-total');
+      if (bumpActive) {
+        btn.innerHTML = '🔒 Get Complete Bundle — ₹499';
+        tot.innerHTML = 'You pay: <span>₹499</span> <small style="color:var(--mu);font-weight:400;font-size:.78rem">(Claude Pack + ChatGPT + Gemini + Midjourney)</small>';
+      } else {
+        btn.innerHTML = '🔒 Get Instant Access — Only ₹299';
+        tot.innerHTML = 'You pay: <span>₹299</span>';
+      }
+    }
+
+    /* RAZORPAY */
+    function payWithRazorpay() {
+      const amount = bumpActive ? CFG.BUMP_AMOUNT : CFG.BASE_AMOUNT;
+      const desc = bumpActive ? 'Complete AI Bundle — All 4 Packs'
+        : 'Claude Prompt Pack — 4,560 Prompts + 4 Bonuses';
+      const redirect = bumpActive ? CFG.BUMP_DOWNLOAD : CFG.BASE_DOWNLOAD;
+      const rzp = new Razorpay({
+        key: CFG.RZP_KEY, amount, currency: 'INR',
+        name: 'PromptPack', description: desc,
+        theme: { color: '#FF6B35' },
+        handler(r) { window.location.href = redirect + '&pid=' + r.razorpay_payment_id; },
+        modal: { ondismiss() { } }
+      });
+      rzp.on('payment.failed', r => alert('Payment failed: ' + r.error.description));
+      rzp.open();
+    }
+
+    /* COUNTDOWN */
+    (function () {
+      const KEY = 'pp_dl_india';
+      let dl = +localStorage.getItem(KEY);
+      if (!dl || dl < Date.now()) { dl = Date.now() + 1 * 60 * 60 * 1000; localStorage.setItem(KEY, dl); }
+      const pad = n => String(n).padStart(2, '0');
+      function tick() {
+        const diff = Math.max(0, dl - Date.now());
+        const d = Math.floor(diff / 86400000), h = Math.floor(diff % 86400000 / 3600000),
+          m = Math.floor(diff % 3600000 / 60000), s = Math.floor(diff % 60000 / 1000);
+        document.getElementById('cd-d').textContent = pad(d);
+        document.getElementById('cd-h').textContent = pad(h);
+        document.getElementById('cd-m').textContent = pad(m);
+        document.getElementById('cd-s').textContent = pad(s);
+        const bt = document.getElementById('banner-timer');
+        if (bt) bt.textContent = pad(d) + 'd ' + pad(h) + 'h ' + pad(m) + 'm ' + pad(s) + 's';
+      }
+      tick(); setInterval(tick, 1000);
+    })();
+
+    /* MOBILE STICKY BAR */
+    (function () {
+      const bar = document.getElementById('sticky-bar');
+      if (!bar || window.innerWidth >= 768) return;
+      const hero = document.querySelector('.hero');
+      const trigger = hero ? hero.offsetTop + hero.offsetHeight : 500;
+      window.addEventListener('scroll', () => {
+        bar.style.display = scrollY > trigger ? 'block' : 'none';
+      }, { passive: true });
+    })();
+
+    /* FAQ TOGGLE */
+    function faq(btn) { btn.closest('.faq-item').classList.toggle('open'); }
+
+    /* SCROLL TO */
+    function goTo(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
   </script>
-
-  <!-- <script>
-/* CONFIG — fill before going live */
-const CFG = {
-  RZP_KEY:           'rzp_live_T8jX1lnAXiaVnH',
-  BASE_AMOUNT:       29900,   // ₹299 — Claude Pack
-  BUMP_AMOUNT:       49900,   // ₹499 — Complete Bundle
-  BASE_DOWNLOAD:     '/promptspackthank-you?region=india&plan=base',
-  BUMP_DOWNLOAD:     '/promptspackthank-you?region=india&plan=bundle',
-};
-
-let bumpActive = false;
-
-/* ORDER BUMP TOGGLE */
-function toggleBump(chk) {
-  bumpActive = chk.checked;
-  const btn  = document.getElementById('main-pay-btn');
-  const tot  = document.getElementById('price-total');
-  if (bumpActive) {
-    btn.innerHTML  = '🔒 Get Complete Bundle — ₹499';
-    tot.innerHTML  = 'You pay: <span>₹499</span> <small style="color:var(--mu);font-weight:400;font-size:.78rem">(Claude Pack + ChatGPT + Gemini + Midjourney)</small>';
-  } else {
-    btn.innerHTML  = '🔒 Get Instant Access — Only ₹299';
-    tot.innerHTML  = 'You pay: <span>₹299</span>';
-  }
-}
-
-/* RAZORPAY */
-function payWithRazorpay() {
-  const amount  = bumpActive ? CFG.BUMP_AMOUNT  : CFG.BASE_AMOUNT;
-  const desc    = bumpActive ? 'Complete AI Bundle — All 4 Packs'
-                             : 'Claude Prompt Pack — 4,560 Prompts + 4 Bonuses';
-  const redirect = bumpActive ? CFG.BUMP_DOWNLOAD : CFG.BASE_DOWNLOAD;
-  const rzp = new Razorpay({
-    key: CFG.RZP_KEY, amount, currency: 'INR',
-    name: 'PromptPack', description: desc,
-    theme: { color: '#FF6B35' },
-    handler(r) { window.location.href = redirect + '&pid=' + r.razorpay_payment_id; },
-    modal: { ondismiss() {} }
-  });
-  rzp.on('payment.failed', r => alert('Payment failed: ' + r.error.description));
-  rzp.open();
-}
-
-/* COUNTDOWN */
-(function() {
-  const KEY = 'pp_dl_india';
-  let dl = +localStorage.getItem(KEY);
-  if (!dl || dl < Date.now()) { dl = Date.now() + 1*60*60*1000; localStorage.setItem(KEY, dl); }
-  const pad = n => String(n).padStart(2,'0');
-  function tick() {
-    const diff = Math.max(0, dl - Date.now());
-    const d=Math.floor(diff/86400000), h=Math.floor(diff%86400000/3600000),
-          m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
-    document.getElementById('cd-d').textContent=pad(d);
-    document.getElementById('cd-h').textContent=pad(h);
-    document.getElementById('cd-m').textContent=pad(m);
-    document.getElementById('cd-s').textContent=pad(s);
-    const bt=document.getElementById('banner-timer');
-    if(bt) bt.textContent=pad(d)+'d '+pad(h)+'h '+pad(m)+'m '+pad(s)+'s';
-  }
-  tick(); setInterval(tick, 1000);
-})();
-
-/* MOBILE STICKY BAR */
-(function() {
-  const bar = document.getElementById('sticky-bar');
-  if (!bar || window.innerWidth >= 768) return;
-  const hero = document.querySelector('.hero');
-  const trigger = hero ? hero.offsetTop + hero.offsetHeight : 500;
-  window.addEventListener('scroll', () => {
-    bar.style.display = scrollY > trigger ? 'block' : 'none';
-  }, { passive: true });
-})();
-
-/* FAQ TOGGLE */
-function faq(btn) { btn.closest('.faq-item').classList.toggle('open'); }
-
-/* SCROLL TO */
-function goTo(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
-}
-</script> -->
 </body>
 
 </html>

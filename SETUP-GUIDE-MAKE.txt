@@ -1,0 +1,84 @@
+═══════════════════════════════════════════════════════════════
+ PRODXSTORE — DELIVERY AUTOMATION WITH MAKE.COM
+═══════════════════════════════════════════════════════════════
+
+Use this instead of the n8n file if you prefer Make.
+File: make-razorpay-delivery.blueprint.json  (validated ✓)
+
+WHAT THE SCENARIO DOES
+----------------------
+Razorpay Webhook → Router → [Bundle route] or [Base route] → Send Email
+The router checks bundle FIRST (so bundle buyers don't also get the
+base email); the base route is the catch-all for every other
+payment.captured event.
+
+═══════════════════════════════════════════════════════════════
+ STEP 1 — IMPORT THE SCENARIO
+═══════════════════════════════════════════════════════════════
+  • Make.com → Scenarios → Create a new scenario
+  • Click the ••• (three dots) menu → "Import Blueprint"
+  • Upload make-razorpay-delivery.blueprint.json
+
+═══════════════════════════════════════════════════════════════
+ STEP 2 — CONNECT THE WEBHOOK
+═══════════════════════════════════════════════════════════════
+  • Open the first module (Custom webhook) → Add → name it
+    "Razorpay Delivery" → SAVE → copy the webhook URL Make gives you
+  • Razorpay Dashboard → Account & Settings → Webhooks → Add:
+       URL   = the Make webhook URL
+       Event = payment.captured
+       Secret = set one (optional but recommended)
+    Save.
+
+═══════════════════════════════════════════════════════════════
+ STEP 3 — CONNECT EMAIL SENDING (both Send Email modules)
+═══════════════════════════════════════════════════════════════
+Recommended: Brevo SMTP (free ~300/day, inbox-grade deliverability)
+  Brevo → SMTP & API → get: host smtp-relay.brevo.com, port 587,
+  login, SMTP key. Verify domain claudepromptpack.in there (add
+  their SPF/DKIM in your DNS).
+
+  In Make, open EACH "Send Email" module → Connection → Add →
+  choose "Email (SMTP)" → enter the Brevo details.
+  (You can also use your Zoho paid mailbox SMTP the same way —
+   the free Zoho plan has NO SMTP, so it can't be used here.)
+
+  Set in both modules:
+     From        = productsupport@prodxstore.com
+     From name   = ProdXStore
+     Reply-To    = productsupport@prodxstore.com
+
+═══════════════════════════════════════════════════════════════
+ STEP 4 — PASTE THE EMAIL HTML
+═══════════════════════════════════════════════════════════════
+  • First replace all FILE_ID_XXXX in the two HTML files with your
+    real Google Drive IDs (same as the thank-you page).
+  • Bundle Send Email module → Content (HTML) field →
+        paste ALL of delivery-email-bundle.html
+  • Base Send Email module → Content (HTML) field →
+        paste ALL of delivery-email-base.html
+
+═══════════════════════════════════════════════════════════════
+ STEP 5 — TEST, THEN TURN ON
+═══════════════════════════════════════════════════════════════
+  • Click "Run once" in Make, then make a ₹1 real payment (or use
+    Razorpay test mode). Watch the bubbles light up.
+  • Confirm: right template (base vs bundle), all links download,
+    from support@…, lands in INBOX not spam.
+  • Toggle the scenario ON (bottom-left) + set schedule to
+    "Immediately" so it runs on every webhook.
+
+PLAN DETECTION
+  Reads notes.plan from the Razorpay payment. If you don't set it
+  at checkout, it falls back to amount ≥ ₹699 = bundle. Change the
+  699 in the Bundle route filter if your bundle price differs.
+
+PAYPAL (later, for international page)
+  Add a second Custom webhook module fed by PayPal webhook
+  PAYMENT.CAPTURE.COMPLETED. Buyer email =
+  payload.resource.payer.email_address. Route into the same two
+  Send Email modules.
+
+n8n vs Make — either works. Make = friendlier visual builder,
+1000 free ops/month. n8n = cheaper/unlimited if self-hosted.
+You have both files; pick one, ignore the other.

@@ -1,0 +1,80 @@
+═══════════════════════════════════════════════════════════════
+ GOOGLE DRIVE LINKS — DOWNLOAD vs VIEW-IN-DRIVE
+═══════════════════════════════════════════════════════════════
+
+Two link types, matched to file size. The thank-you page now
+handles BOTH automatically — you just set id + mode per file.
+
+───────────────────────────────────────────────────────────────
+ SMALL FILES (Excel, PDF — under ~100 MB)  →  mode:'download'
+───────────────────────────────────────────────────────────────
+ One click = file downloads straight to the buyer's device.
+
+ In config:
+   claude_xlsx: { id:'1AbC...xyz', mode:'download' },
+
+ Button shows:  ↓ Download
+
+───────────────────────────────────────────────────────────────
+ LARGE FILES / COLLECTIONS (1.85 GB worksheets, videos, folders)
+                                            →  mode:'view'
+───────────────────────────────────────────────────────────────
+ Opens INSIDE Google Drive. Buyer can preview, click
+ "Add shortcut to My Drive" (keeps it forever, uses none of
+ their storage), or download later when they want.
+ This avoids Google's "can't scan large file" warning and
+ quota-exceeded download errors.
+
+ Single large file:
+   kids_pack: { id:'1AbC...xyz', mode:'view' },
+
+ A whole FOLDER of files:
+   kids_pack: { id:'1FoLdErId', mode:'view', isFolder:true },
+
+ Button shows:  ↗ Open in Drive
+
+═══════════════════════════════════════════════════════════════
+ HOW TO GET THE ID (both types share the same steps)
+═══════════════════════════════════════════════════════════════
+ 1. In Google Drive, right-click the file OR folder → Share
+ 2. Under "General access" choose:  Anyone with the link → Viewer
+    (Viewer still lets them download + add to My Drive; it only
+     stops them editing your master copy.)
+ 3. Click "Copy link". You'll get one of these:
+
+    FILE:
+    https://drive.google.com/file/d/ 1AbC...xyz /view?usp=sharing
+                                     └── the ID ──┘
+
+    FOLDER:
+    https://drive.google.com/drive/folders/ 1FoLdErId ?usp=sharing
+                                            └─ the ID ─┘
+
+ 4. Paste ONLY that middle ID into the config. For folders, also
+    add  isFolder:true .
+
+═══════════════════════════════════════════════════════════════
+ SAME RULE FOR THE EMAIL TEMPLATES
+═══════════════════════════════════════════════════════════════
+ In delivery-email-*.html, for a large product swap the button
+ href from the download form to the view form:
+
+   DOWNLOAD (small):
+   https://drive.google.com/uc?export=download&id=FILE_ID
+
+   VIEW IN DRIVE (large file):
+   https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+
+   VIEW IN DRIVE (folder):
+   https://drive.google.com/drive/folders/FOLDER_ID?usp=sharing
+
+ Keep the SAME id in the thank-you page and the email.
+
+═══════════════════════════════════════════════════════════════
+ TIP FOR THE 1.85 GB WORKSHEET COLLECTION
+═══════════════════════════════════════════════════════════════
+ Put the whole collection in ONE Drive folder, share the FOLDER
+ as "Anyone with link → Viewer", and deliver the folder link with
+ mode:'view', isFolder:true. Buyers open the folder, add it to
+ their Drive, and grab whatever they need whenever they need it —
+ no giant forced download, no quota errors.

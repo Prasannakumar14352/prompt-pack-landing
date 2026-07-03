@@ -409,7 +409,7 @@
 
   <!-- ── BRAND BAR ───────────────────────────────────── -->
   <div style="display:flex;justify-content:center;padding:16px 20px 4px;position:relative;z-index:1">
-    <a href="https://prodxstore.com" aria-label="ProdXStore home"><img src="/assets/logo-nav.png" alt="ProdXStore"
+    <a href="https://prodxstore.com" aria-label="ProdXStore home"><img src="./assets/logo-nav.png" alt="ProdXStore"
         style="height:30px;width:auto" /></a>
   </div>
 
@@ -462,14 +462,7 @@
             <a class="dl-btn" href="#" data-file="claude_xlsx">↓ Download</a>
           </div>
 
-          <div class="dl-card">
-            <div class="dl-icon-wrap">📋</div>
-            <div class="dl-info">
-              <div class="dl-name">Claude Prompt Pack — 4,560 Prompts.csv</div>
-              <div class="dl-meta">CSV backup · All prompts in one file · Works anywhere</div>
-            </div>
-            <a class="dl-btn" href="#" data-file="claude_csv">↓ Download</a>
-          </div>
+          
         </div>
 
         <!-- ── FREE BONUSES ────────────────────── -->
@@ -592,34 +585,56 @@
 
     <footer>
       <a href="https://prodxstore.com" aria-label="ProdXStore — Digital Products Marketplace"><img
-          src="/assets/logo-full.png" alt="ProdXStore — Digital Products Marketplace"
+          src="./assets/logo-full.png" alt="ProdXStore — Digital Products Marketplace"
           style="height:54px;width:auto;margin:0 auto 10px;display:block" /></a>
       <div style="font-size:.78rem;color:#888;margin-bottom:6px">Claude Prompt Pack is a <a
           href="https://prodxstore.com" style="color:#FF6B35;text-decoration:none">ProdXStore</a> product</div>
-      © 2026 · prodxstore.com · Not affiliated with Anthropic
+      © 2026 · claudepromptpack.in · Not affiliated with Anthropic
     </footer>
 
     <!-- ── JS ─────────────────────────────────────────────── -->
     <script>
       // ══════════════════════════════════════════════════════════
-      // STEP 1: Upload each file to Google Drive
-      // STEP 2: Right-click file -> Share -> "Anyone with the link"
-      // STEP 3: Copy the FILE ID from the share URL:
-      //         https://drive.google.com/file/d/  FILE_ID_IS_THIS_PART  /view
-      // STEP 4: Paste ONLY the ID between the quotes below
+      //  DELIVERY CONFIG — one entry per file.
+      //
+      //  For EACH file, paste its Drive FILE ID and choose a mode:
+      //    mode:'download'  → small files (Excel, PDF). One-click download.
+      //    mode:'view'      → LARGE files (>100MB) or folders. Opens in
+      //                       Google Drive so the buyer can preview,
+      //                       "Add to My Drive", or download when they want.
+      //
+      //  HOW TO GET THE ID:
+      //    File:   Share link is  drive.google.com/file/d/ <THIS_IS_THE_ID> /view
+      //    Folder: Share link is  drive.google.com/drive/folders/ <THIS_IS_THE_ID>
+      //    For a folder, also set  isFolder:true
+      //
+      //  Always share as: "Anyone with the link → Viewer"
       // ══════════════════════════════════════════════════════════
-      const FILE_IDS = {
-        claude_xlsx: '1-_m2ims8T8jrbANVX1D3cDyKwurH_qq4',   // Claude Prompt Pack — 4,560 Prompts.xlsx
-        bonus1: '1rYfYQtAaVnprwKTNxqFUWONR9c60MEc8',   // Bonus 1 — Claude Cheat Sheet.pdf
-        bonus2: '1Xrs3Gfk6o9YQKozyV6j3Lh6uwTjqtYeB',   // Bonus 2 — Prompt Engineering Mini-Guide.pdf
-        bonus3: '1nS0oYqD3x9TSDR3Zu0kRZbkhw1vvj6VY',   // Bonus 3 — AI Tools Starter Kit.pdf
-        bonus4: '1bVnHF3sY9BIo20fNPKY1fIHyOP2cyuo6',   // Bonus 4 — ChatGPT 100 Starter Prompts.pdf
-        chatgpt_xlsx: '10QlApeDhBp0KJWuvBuTYAGBnXl-e2MAZ',   // ChatGPT Prompt Pack — 2,000 Prompts.xlsx (bundle)
-        gemini_xlsx: '1P23_PxadUCj7UGD2HLypJ4XEUK1eqPLF',   // Gemini Prompt Pack — 1,500 Prompts.xlsx (bundle)
-        midjourney_xlsx: '1PbP8o1_5AtmNn09zpUZhpYo37oA2-qhJ',   // Midjourney Prompt Pack — 600 Prompts.xlsx (bundle)
+      const FILES = {
+        claude_xlsx: { id: '1-_m2ims8T8jrbANVX1D3cDyKwurH_qq4', mode: 'download' },   // Claude Prompt Pack — 4,560 Prompts.xlsx
+        bonus1: { id: '1rYfYQtAaVnprwKTNxqFUWONR9c60MEc8', mode: 'download' },   // Bonus 1 — Claude Cheat Sheet.pdf
+        bonus2: { id: '1Xrs3Gfk6o9YQKozyV6j3Lh6uwTjqtYeB', mode: 'download' },   // Bonus 2 — Prompt Engineering Mini-Guide.pdf
+        bonus3: { id: '1nS0oYqD3x9TSDR3Zu0kRZbkhw1vvj6VY', mode: 'download' },   // Bonus 3 — AI Tools Starter Kit.pdf
+        bonus4: { id: '1bVnHF3sY9BIo20fNPKY1fIHyOP2cyuo6', mode: 'download' },   // Bonus 4 — ChatGPT 100 Starter Prompts.pdf
+        chatgpt_xlsx: { id: '10QlApeDhBp0KJWuvBuTYAGBnXl-e2MAZ', mode: 'download' },   // ChatGPT Prompt Pack (bundle)
+        gemini_xlsx: { id: '1P23_PxadUCj7UGD2HLypJ4XEUK1eqPLF', mode: 'download' },   // Gemini Prompt Pack (bundle)
+        midjourney_xlsx: { id: '1PbP8o1_5AtmNn09zpUZhpYo37oA2-qhJ', mode: 'download' },   // Midjourney Prompt Pack (bundle)
+
+        // EXAMPLE — a large "view in Drive" product (for future kids worksheets etc.):
+        // kids_worksheets: { id:'PASTE_FOLDER_OR_FILE_ID', mode:'view', isFolder:true },
       };
 
-      const driveUrl = id => 'https://drive.google.com/uc?export=download&id=' + id;
+      // Build the correct URL for each mode
+      function buildUrl(cfg) {
+        if (!cfg || !cfg.id) return null;
+        if (cfg.mode === 'view') {
+          return cfg.isFolder
+            ? 'https://drive.google.com/drive/folders/' + cfg.id + '?usp=sharing'
+            : 'https://drive.google.com/file/d/' + cfg.id + '/view?usp=sharing';
+        }
+        // default: direct download (best for files under ~100MB)
+        return 'https://drive.google.com/uc?export=download&id=' + cfg.id;
+      }
 
       // ── INIT PAGE ────────────────────────────────────────────
       document.addEventListener('DOMContentLoaded', function () {
@@ -632,17 +647,20 @@
           if (el) el.textContent = 'Order: ' + pid.slice(0, 16) + (pid.length > 16 ? '...' : '');
         }
 
-        // Wire download buttons from FILE_IDS
+        // Wire each button from FILES config
         document.querySelectorAll('a.dl-btn[data-file]').forEach(a => {
-          const id = FILE_IDS[a.dataset.file];
-          if (id) {
-            a.href = driveUrl(id);
+          const cfg = FILES[a.dataset.file];
+          const url = buildUrl(cfg);
+          if (url) {
+            a.href = url;
             a.target = '_blank';
             a.rel = 'noopener';
+            // Relabel button so buyers know what to expect for large files
+            if (cfg.mode === 'view') a.innerHTML = '\u2197 Open in Drive';
           } else {
             a.addEventListener('click', function (e) {
               e.preventDefault();
-              alert('This download link is being set up. Please use the links in your email, or contact productsupport@prodxstore.com and we will send your files right away.');
+              alert('This link is being set up. Please use the links in your email, or contact productsupport@prodxstore.com and we will send your files right away.');
             });
           }
         });
