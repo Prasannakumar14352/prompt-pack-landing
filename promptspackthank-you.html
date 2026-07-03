@@ -1,325 +1,664 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Download Your Claude Prompt Pack | PromptPack</title>
-<meta name="robots" content="noindex,nofollow"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0A0A0A;--s1:#141414;--s2:#1C1C1C;--border:#2A2A2A;
-  --or:#FF6B35;--wh:#FFFFFF;--tx:#E8E8E8;--mu:#888;--su:#555;
-  --green:#00B07C;--purple:#7B61FF;--gold:#F5C842;--rd:12px;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,107,53,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,53,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
-.wrap{max-width:720px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Download Your Claude Prompt Pack | PromptPack</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* ── SUCCESS HEADER ─────────────────────────────────── */
-.success-bar{background:linear-gradient(90deg,#0D5C3A,var(--green),#0D5C3A);padding:12px 20px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:#fff;letter-spacing:.03em}
-.success-bar span{background:rgba(0,0,0,.2);padding:2px 12px;border-radius:999px;margin-left:8px}
+    :root {
+      --bg: #0A0A0A;
+      --s1: #141414;
+      --s2: #1C1C1C;
+      --border: #2A2A2A;
+      --or: #FF6B35;
+      --wh: #FFFFFF;
+      --tx: #E8E8E8;
+      --mu: #888;
+      --su: #555;
+      --green: #00B07C;
+      --purple: #7B61FF;
+      --gold: #F5C842;
+      --rd: 12px;
+    }
 
-/* ── HERO ────────────────────────────────────────────── */
-.ty-hero{text-align:center;padding:52px 20px 32px}
-.ty-icon{font-size:3.5rem;margin-bottom:16px;animation:pop .4s ease-out}
-@keyframes pop{0%{transform:scale(0.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
-.ty-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:800;color:var(--wh);letter-spacing:-.02em;margin-bottom:10px}
-.ty-sub{font-size:.95rem;color:var(--mu);line-height:1.7;max-width:480px;margin:0 auto}
-.plan-badge{display:inline-block;background:var(--or);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:4px 14px;margin-top:14px}
+    html {
+      scroll-behavior: smooth
+    }
 
-/* ── DOWNLOAD SECTION ───────────────────────────────── */
-.dl-section{padding:8px 0 48px}
-.dl-group{margin-bottom:10px}
-.dl-group-title{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin:28px 0 10px;padding-left:4px}
-.dl-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--rd);overflow:hidden;display:flex;align-items:center;gap:0;transition:border-color .2s;margin-bottom:8px}
-.dl-card:hover{border-color:rgba(255,107,53,.4)}
-.dl-icon-wrap{width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;background:var(--s2);border-right:1px solid var(--border)}
-.dl-info{flex:1;padding:12px 16px;min-width:0}
-.dl-name{font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:700;color:var(--wh);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.dl-meta{font-size:.72rem;color:var(--mu)}
-.dl-btn{background:var(--or);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.78rem;padding:10px 18px;border:none;cursor:pointer;transition:background .2s;white-space:nowrap;flex-shrink:0;margin-right:12px;border-radius:8px;text-decoration:none;display:inline-block}
-.dl-btn:hover{background:#C0501F}
-.dl-btn-ghost{background:transparent;color:var(--or);border:1px solid rgba(255,107,53,.4);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.78rem;padding:9px 16px;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;margin-right:12px;border-radius:8px;text-decoration:none;display:inline-block}
-.dl-btn-ghost:hover{background:rgba(255,107,53,.1)}
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      min-height: 100vh;
+      overflow-x: hidden
+    }
 
-/* ── EMAIL NOTICE ────────────────────────────────────── */
-.email-notice{background:rgba(0,176,124,.07);border:1px solid rgba(0,176,124,.25);border-radius:var(--rd);padding:16px 20px;display:flex;gap:14px;align-items:flex-start;margin:20px 0}
-.email-icon{font-size:1.4rem;flex-shrink:0}
-.email-title{font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:700;color:var(--wh);margin-bottom:3px}
-.email-desc{font-size:.78rem;color:var(--mu);line-height:1.6}
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 107, 53, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 107, 53, .025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0
+    }
 
-/* ── INSTRUCTIONS BOX ───────────────────────────────── */
-.howto-box{background:var(--s1);border:1px solid var(--border);border-radius:var(--rd);padding:24px;margin:24px 0}
-.howto-title{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;color:var(--wh);margin-bottom:16px}
-.howto-steps{display:flex;flex-direction:column;gap:12px}
-.howto-step{display:flex;gap:12px;align-items:flex-start}
-.howto-num{width:22px;height:22px;border-radius:50%;background:var(--or);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.howto-text{font-size:.83rem;color:var(--mu);line-height:1.6}
-.howto-text strong{color:var(--tx)}
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1
+    }
 
-/* ── SUPPORT ─────────────────────────────────────────── */
-.support-box{text-align:center;padding:28px 20px;border-top:1px solid var(--border);margin-top:32px}
-.support-text{font-size:.82rem;color:var(--mu);margin-bottom:10px}
-.support-email{color:var(--or);font-weight:600;font-size:.88rem}
+    /* ── SUCCESS HEADER ─────────────────────────────────── */
+    .success-bar {
+      background: linear-gradient(90deg, #0D5C3A, var(--green), #0D5C3A);
+      padding: 12px 20px;
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .03em
+    }
 
-/* ── FOOTER ──────────────────────────────────────────── */
-footer{text-align:center;padding:24px;border-top:1px solid var(--border);font-size:.74rem;color:var(--su);position:relative;z-index:1}
+    .success-bar span {
+      background: rgba(0, 0, 0, .2);
+      padding: 2px 12px;
+      border-radius: 999px;
+      margin-left: 8px
+    }
 
-/* ── BUNDLE ONLY items ───────────────────────────────── */
-.bundle-only{display:none}
-.show-bundle .bundle-only{display:block}
-.base-only{display:block}
-.show-bundle .base-only{display:none}
+    /* ── HERO ────────────────────────────────────────────── */
+    .ty-hero {
+      text-align: center;
+      padding: 52px 20px 32px
+    }
 
-/* ── LOADING STATE ───────────────────────────────────── */
-#loading{text-align:center;padding:80px 20px;color:var(--mu);font-size:.95rem}
-#content{display:none}
-</style>
+    .ty-icon {
+      font-size: 3.5rem;
+      margin-bottom: 16px;
+      animation: pop .4s ease-out
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.5);
+        opacity: 0
+      }
+
+      80% {
+        transform: scale(1.1)
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1
+      }
+    }
+
+    .ty-h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 800;
+      color: var(--wh);
+      letter-spacing: -.02em;
+      margin-bottom: 10px
+    }
+
+    .ty-sub {
+      font-size: .95rem;
+      color: var(--mu);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto
+    }
+
+    .plan-badge {
+      display: inline-block;
+      background: var(--or);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 4px 14px;
+      margin-top: 14px
+    }
+
+    /* ── DOWNLOAD SECTION ───────────────────────────────── */
+    .dl-section {
+      padding: 8px 0 48px
+    }
+
+    .dl-group {
+      margin-bottom: 10px
+    }
+
+    .dl-group-title {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mu);
+      margin: 28px 0 10px;
+      padding-left: 4px
+    }
+
+    .dl-card {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: var(--rd);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      transition: border-color .2s;
+      margin-bottom: 8px
+    }
+
+    .dl-card:hover {
+      border-color: rgba(255, 107, 53, .4)
+    }
+
+    .dl-icon-wrap {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      background: var(--s2);
+      border-right: 1px solid var(--border)
+    }
+
+    .dl-info {
+      flex: 1;
+      padding: 12px 16px;
+      min-width: 0
+    }
+
+    .dl-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--wh);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .dl-meta {
+      font-size: .72rem;
+      color: var(--mu)
+    }
+
+    .dl-btn {
+      background: var(--or);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .78rem;
+      padding: 10px 18px;
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-right: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block
+    }
+
+    .dl-btn:hover {
+      background: #C0501F
+    }
+
+    .dl-btn-ghost {
+      background: transparent;
+      color: var(--or);
+      border: 1px solid rgba(255, 107, 53, .4);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: .78rem;
+      padding: 9px 16px;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-right: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block
+    }
+
+    .dl-btn-ghost:hover {
+      background: rgba(255, 107, 53, .1)
+    }
+
+    /* ── EMAIL NOTICE ────────────────────────────────────── */
+    .email-notice {
+      background: rgba(0, 176, 124, .07);
+      border: 1px solid rgba(0, 176, 124, .25);
+      border-radius: var(--rd);
+      padding: 16px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin: 20px 0
+    }
+
+    .email-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0
+    }
+
+    .email-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--wh);
+      margin-bottom: 3px
+    }
+
+    .email-desc {
+      font-size: .78rem;
+      color: var(--mu);
+      line-height: 1.6
+    }
+
+    /* ── INSTRUCTIONS BOX ───────────────────────────────── */
+    .howto-box {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: var(--rd);
+      padding: 24px;
+      margin: 24px 0
+    }
+
+    .howto-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--wh);
+      margin-bottom: 16px
+    }
+
+    .howto-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .howto-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start
+    }
+
+    .howto-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--or);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .72rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px
+    }
+
+    .howto-text {
+      font-size: .83rem;
+      color: var(--mu);
+      line-height: 1.6
+    }
+
+    .howto-text strong {
+      color: var(--tx)
+    }
+
+    /* ── SUPPORT ─────────────────────────────────────────── */
+    .support-box {
+      text-align: center;
+      padding: 28px 20px;
+      border-top: 1px solid var(--border);
+      margin-top: 32px
+    }
+
+    .support-text {
+      font-size: .82rem;
+      color: var(--mu);
+      margin-bottom: 10px
+    }
+
+    .support-email {
+      color: var(--or);
+      font-weight: 600;
+      font-size: .88rem
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      font-size: .74rem;
+      color: var(--su);
+      position: relative;
+      z-index: 1
+    }
+
+    /* ── BUNDLE ONLY items ───────────────────────────────── */
+    .bundle-only {
+      display: none
+    }
+
+    .show-bundle .bundle-only {
+      display: block
+    }
+
+    .base-only {
+      display: block
+    }
+
+    .show-bundle .base-only {
+      display: none
+    }
+
+    /* ── LOADING STATE ───────────────────────────────────── */
+    #loading {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--mu);
+      font-size: .95rem
+    }
+
+    #content {
+      display: none
+    }
+  </style>
 </head>
+
 <body>
 
 
-<!-- ── BRAND BAR ───────────────────────────────────── -->
-<div style="display:flex;justify-content:center;padding:16px 20px 4px;position:relative;z-index:1">
-  <a href="https://prodxstore.com" aria-label="ProdXStore home"><img src="/assets/logo-nav.png" alt="ProdXStore" style="height:30px;width:auto"/></a>
-</div>
-
-<!-- ── SUCCESS BAR ─────────────────────────────────── -->
-<div class="success-bar">
-  ✅ Payment Confirmed
-  <span id="order-id-display"></span>
-</div>
-
-<!-- LOADING STATE -->
-<div id="loading">Loading your downloads...</div>
-
-<!-- MAIN CONTENT -->
-<div id="content">
-
-<!-- ── HERO ─────────────────────────────────────────── -->
-<div class="ty-hero">
-  <div class="ty-icon">🎉</div>
-  <h1 class="ty-h1">You're in! Downloads ready.</h1>
-  <p class="ty-sub">Your purchase is confirmed. All your files are available below — click any button to download instantly.</p>
-  <div class="plan-badge" id="plan-label">Claude Prompt Pack + 4 Bonuses</div>
-</div>
-
-<!-- ── DOWNLOADS ─────────────────────────────────────── -->
-<div class="wrap">
-
-  <!-- EMAIL NOTICE -->
-  <div class="email-notice">
-    <div class="email-icon">📧</div>
-    <div>
-      <div class="email-title">Download links also sent to your email</div>
-      <div class="email-desc">Check your inbox (and spam folder) for an email from productsupport@prodxstore.com with all download links. They're valid forever.</div>
-    </div>
+  <!-- ── BRAND BAR ───────────────────────────────────── -->
+  <div style="display:flex;justify-content:center;padding:16px 20px 4px;position:relative;z-index:1">
+    <a href="https://prodxstore.com" aria-label="ProdXStore home"><img src="/assets/logo-nav.png" alt="ProdXStore"
+        style="height:30px;width:auto" /></a>
   </div>
 
-  <div class="dl-section">
+  <!-- ── SUCCESS BAR ─────────────────────────────────── -->
+  <div class="success-bar">
+    ✅ Payment Confirmed
+    <span id="order-id-display"></span>
+  </div>
 
-    <!-- ── MAIN PRODUCT ────────────────────── -->
-    <div class="dl-group">
-      <div class="dl-group-title">📦 Main Product</div>
+  <!-- LOADING STATE -->
+  <div id="loading">Loading your downloads...</div>
 
-      <div class="dl-card">
-        <div class="dl-icon-wrap">📊</div>
-        <div class="dl-info">
-          <div class="dl-name">Claude Prompt Pack — 4,560 Prompts.xlsx</div>
-          <div class="dl-meta">Excel workbook · 20 sheets · Clickable index · ~350 KB</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="claude_xlsx">↓ Download</a>
-      </div>
+  <!-- MAIN CONTENT -->
+  <div id="content">
 
-      <div class="dl-card">
-        <div class="dl-icon-wrap">📋</div>
-        <div class="dl-info">
-          <div class="dl-name">Claude Prompt Pack — 4,560 Prompts.csv</div>
-          <div class="dl-meta">CSV backup · All prompts in one file · Works anywhere</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="claude_csv">↓ Download</a>
-      </div>
+    <!-- ── HERO ─────────────────────────────────────────── -->
+    <div class="ty-hero">
+      <div class="ty-icon">🎉</div>
+      <h1 class="ty-h1">You're in! Downloads ready.</h1>
+      <p class="ty-sub">Your purchase is confirmed. All your files are available below — click any button to download
+        instantly.</p>
+      <div class="plan-badge" id="plan-label">Claude Prompt Pack + 4 Bonuses</div>
     </div>
 
-    <!-- ── FREE BONUSES ────────────────────── -->
-    <div class="dl-group">
-      <div class="dl-group-title">🎁 Your Free Bonuses (4 PDFs)</div>
+    <!-- ── DOWNLOADS ─────────────────────────────────────── -->
+    <div class="wrap">
 
-      <div class="dl-card">
-        <div class="dl-icon-wrap">📋</div>
-        <div class="dl-info">
-          <div class="dl-name">Bonus 1 — Claude Cheat Sheet.pdf</div>
-          <div class="dl-meta">50 top prompts · Single printable page · PDF</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="bonus1">↓ Download</a>
-      </div>
-
-      <div class="dl-card">
-        <div class="dl-icon-wrap">⚡</div>
-        <div class="dl-info">
-          <div class="dl-name">Bonus 2 — Prompt Engineering Mini-Guide.pdf</div>
-          <div class="dl-meta">5 frameworks · RICE, COSTAR, APE, CoT, Few-Shot · PDF</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="bonus2">↓ Download</a>
-      </div>
-
-      <div class="dl-card">
-        <div class="dl-icon-wrap">🛠️</div>
-        <div class="dl-info">
-          <div class="dl-name">Bonus 3 — AI Tools Starter Kit.pdf</div>
-          <div class="dl-meta">Top 10 free AI tools + best prompt for each · PDF</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="bonus3">↓ Download</a>
-      </div>
-
-      <div class="dl-card">
-        <div class="dl-icon-wrap">🤖</div>
-        <div class="dl-info">
-          <div class="dl-name">Bonus 4 — ChatGPT 100 Starter Prompts.pdf</div>
-          <div class="dl-meta">100 ChatGPT-ready prompts · 10 categories · PDF</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="bonus4">↓ Download</a>
-      </div>
-    </div>
-
-    <!-- ── BUNDLE EXTRAS (shown only if plan=bundle) ── -->
-    <div class="dl-group bundle-only" id="bundle-section">
-      <div class="dl-group-title">🚀 Complete AI Bundle — Your Upgrade</div>
-
-      <div class="dl-card">
-        <div class="dl-icon-wrap">💬</div>
-        <div class="dl-info">
-          <div class="dl-name">ChatGPT Prompt Pack — 2,000 Prompts.xlsx</div>
-          <div class="dl-meta">20 categories · 10 ChatGPT-specific formats · Excel</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="chatgpt_xlsx">↓ Download</a>
-      </div>
-
-      <div class="dl-card">
-        <div class="dl-icon-wrap">🔷</div>
-        <div class="dl-info">
-          <div class="dl-name">Gemini Prompt Pack — 1,500 Prompts.xlsx</div>
-          <div class="dl-meta">15 categories · Research, Workspace, real-time · Excel</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="gemini_xlsx">↓ Download</a>
-      </div>
-
-      <div class="dl-card">
-        <div class="dl-icon-wrap">🎨</div>
-        <div class="dl-info">
-          <div class="dl-name">Midjourney Prompt Pack — 600 Image Prompts.xlsx</div>
-          <div class="dl-meta">12 categories · Portraits, Products, Branding, Abstract · Excel</div>
-        </div>
-        <a class="dl-btn" href="#" data-file="midjourney_xlsx">↓ Download</a>
-      </div>
-    </div>
-
-    <!-- ── HOW TO USE ───────────────────────── -->
-    <div class="howto-box">
-      <div class="howto-title">⚡ Quick Start Guide</div>
-      <div class="howto-steps">
-        <div class="howto-step">
-          <div class="howto-num">1</div>
-          <div class="howto-text"><strong>Download the Excel file</strong> and open it in Microsoft Excel, Google Sheets, or LibreOffice.</div>
-        </div>
-        <div class="howto-step">
-          <div class="howto-num">2</div>
-          <div class="howto-text"><strong>Click any category in the Index tab</strong> — it jumps straight to that sheet. No scrolling through tabs.</div>
-        </div>
-        <div class="howto-step">
-          <div class="howto-num">3</div>
-          <div class="howto-text"><strong>Find your prompt, fill in [BRACKETS]</strong> with your specific details. Takes 30 seconds.</div>
-        </div>
-        <div class="howto-step">
-          <div class="howto-num">4</div>
-          <div class="howto-text"><strong>Open Claude at claude.ai</strong>, paste the completed prompt, press enter. Get a specific, usable result.</div>
-        </div>
-        <div class="howto-step">
-          <div class="howto-num">5</div>
-          <div class="howto-text"><strong>Start with Bonus 1</strong> (Cheat Sheet PDF) — pin it next to your screen for the 50 most-used prompts at a glance.</div>
+      <!-- EMAIL NOTICE -->
+      <div class="email-notice">
+        <div class="email-icon">📧</div>
+        <div>
+          <div class="email-title">Download links also sent to your email</div>
+          <div class="email-desc">Check your inbox (and spam folder) for an email from productsupport@prodxstore.com
+            with all download links. They're valid forever.</div>
         </div>
       </div>
-    </div>
 
-    <!-- ── SUPPORT ──────────────────────────── -->
-    <div class="support-box">
-      <div class="support-text">Download not working? Have a question? 7-day money-back guarantee still applies.</div>
-      <div><a href="mailto:productsupport@prodxstore.com" class="support-email">productsupport@prodxstore.com</a></div>
-      <div style="margin-top:14px;font-size:.76rem;color:var(--su)">Keep this page bookmarked — your links never expire.</div>
-    </div>
+      <div class="dl-section">
 
-  </div><!-- /wrap -->
-</div><!-- /content -->
+        <!-- ── MAIN PRODUCT ────────────────────── -->
+        <div class="dl-group">
+          <div class="dl-group-title">📦 Main Product</div>
 
-<footer>
-  <a href="https://prodxstore.com" aria-label="ProdXStore — Digital Products Marketplace"><img src="/assets/logo-full.png" alt="ProdXStore — Digital Products Marketplace" style="height:54px;width:auto;margin:0 auto 10px;display:block"/></a>
-  <div style="font-size:.78rem;color:#888;margin-bottom:6px">Claude Prompt Pack is a <a href="https://prodxstore.com" style="color:#FF6B35;text-decoration:none">ProdXStore</a> product</div>
-  © 2026 · prodxstore.com · Not affiliated with Anthropic
-</footer>
+          <div class="dl-card">
+            <div class="dl-icon-wrap">📊</div>
+            <div class="dl-info">
+              <div class="dl-name">Claude Prompt Pack — 4,560 Prompts.xlsx</div>
+              <div class="dl-meta">Excel workbook · 20 sheets · Clickable index · ~350 KB</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="claude_xlsx">↓ Download</a>
+          </div>
 
-<!-- ── JS ─────────────────────────────────────────────── -->
-<script>
-// ══════════════════════════════════════════════════════════
-// STEP 1: Upload each file to Google Drive
-// STEP 2: Right-click file -> Share -> "Anyone with the link"
-// STEP 3: Copy the FILE ID from the share URL:
-//         https://drive.google.com/file/d/  FILE_ID_IS_THIS_PART  /view
-// STEP 4: Paste ONLY the ID between the quotes below
-// ══════════════════════════════════════════════════════════
-const FILE_IDS = {
-  claude_xlsx:     '1-_m2ims8T8jrbANVX1D3cDyKwurH_qq4',   // Claude Prompt Pack — 4,560 Prompts.xlsx
-  bonus1:          '1rYfYQtAaVnprwKTNxqFUWONR9c60MEc8',   // Bonus 1 — Claude Cheat Sheet.pdf
-  bonus2:          '1Xrs3Gfk6o9YQKozyV6j3Lh6uwTjqtYeB',   // Bonus 2 — Prompt Engineering Mini-Guide.pdf
-  bonus3:          '1nS0oYqD3x9TSDR3Zu0kRZbkhw1vvj6VY',   // Bonus 3 — AI Tools Starter Kit.pdf
-  bonus4:          '1bVnHF3sY9BIo20fNPKY1fIHyOP2cyuo6',   // Bonus 4 — ChatGPT 100 Starter Prompts.pdf
-  chatgpt_xlsx:    '10QlApeDhBp0KJWuvBuTYAGBnXl-e2MAZ',   // ChatGPT Prompt Pack — 2,000 Prompts.xlsx (bundle)
-  gemini_xlsx:     '1P23_PxadUCj7UGD2HLypJ4XEUK1eqPLF',   // Gemini Prompt Pack — 1,500 Prompts.xlsx (bundle)
-  midjourney_xlsx: '1PbP8o1_5AtmNn09zpUZhpYo37oA2-qhJ',   // Midjourney Prompt Pack — 600 Prompts.xlsx (bundle)
-};
+          <div class="dl-card">
+            <div class="dl-icon-wrap">📋</div>
+            <div class="dl-info">
+              <div class="dl-name">Claude Prompt Pack — 4,560 Prompts.csv</div>
+              <div class="dl-meta">CSV backup · All prompts in one file · Works anywhere</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="claude_csv">↓ Download</a>
+          </div>
+        </div>
 
-const driveUrl = id => 'https://drive.google.com/uc?export=download&id=' + id;
+        <!-- ── FREE BONUSES ────────────────────── -->
+        <div class="dl-group">
+          <div class="dl-group-title">🎁 Your Free Bonuses (4 PDFs)</div>
 
-// ── INIT PAGE ────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  const params  = new URLSearchParams(window.location.search);
-  const plan    = params.get('plan')   || 'base';
-  const pid     = params.get('pid')    || params.get('orderID') || '';
+          <div class="dl-card">
+            <div class="dl-icon-wrap">📋</div>
+            <div class="dl-info">
+              <div class="dl-name">Bonus 1 — Claude Cheat Sheet.pdf</div>
+              <div class="dl-meta">50 top prompts · Single printable page · PDF</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="bonus1">↓ Download</a>
+          </div>
 
-  if (pid) {
-    const el = document.getElementById('order-id-display');
-    if (el) el.textContent = 'Order: ' + pid.slice(0,16) + (pid.length > 16 ? '...' : '');
-  }
+          <div class="dl-card">
+            <div class="dl-icon-wrap">⚡</div>
+            <div class="dl-info">
+              <div class="dl-name">Bonus 2 — Prompt Engineering Mini-Guide.pdf</div>
+              <div class="dl-meta">5 frameworks · RICE, COSTAR, APE, CoT, Few-Shot · PDF</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="bonus2">↓ Download</a>
+          </div>
 
-  // Wire download buttons from FILE_IDS
-  document.querySelectorAll('a.dl-btn[data-file]').forEach(a => {
-    const id = FILE_IDS[a.dataset.file];
-    if (id) {
-      a.href = driveUrl(id);
-      a.target = '_blank';
-      a.rel = 'noopener';
-    } else {
-      a.addEventListener('click', function(e){
-        e.preventDefault();
-        alert('This download link is being set up. Please use the links in your email, or contact productsupport@prodxstore.com and we will send your files right away.');
+          <div class="dl-card">
+            <div class="dl-icon-wrap">🛠️</div>
+            <div class="dl-info">
+              <div class="dl-name">Bonus 3 — AI Tools Starter Kit.pdf</div>
+              <div class="dl-meta">Top 10 free AI tools + best prompt for each · PDF</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="bonus3">↓ Download</a>
+          </div>
+
+          <div class="dl-card">
+            <div class="dl-icon-wrap">🤖</div>
+            <div class="dl-info">
+              <div class="dl-name">Bonus 4 — ChatGPT 100 Starter Prompts.pdf</div>
+              <div class="dl-meta">100 ChatGPT-ready prompts · 10 categories · PDF</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="bonus4">↓ Download</a>
+          </div>
+        </div>
+
+        <!-- ── BUNDLE EXTRAS (shown only if plan=bundle) ── -->
+        <div class="dl-group bundle-only" id="bundle-section">
+          <div class="dl-group-title">🚀 Complete AI Bundle — Your Upgrade</div>
+
+          <div class="dl-card">
+            <div class="dl-icon-wrap">💬</div>
+            <div class="dl-info">
+              <div class="dl-name">ChatGPT Prompt Pack — 2,000 Prompts.xlsx</div>
+              <div class="dl-meta">20 categories · 10 ChatGPT-specific formats · Excel</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="chatgpt_xlsx">↓ Download</a>
+          </div>
+
+          <div class="dl-card">
+            <div class="dl-icon-wrap">🔷</div>
+            <div class="dl-info">
+              <div class="dl-name">Gemini Prompt Pack — 1,500 Prompts.xlsx</div>
+              <div class="dl-meta">15 categories · Research, Workspace, real-time · Excel</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="gemini_xlsx">↓ Download</a>
+          </div>
+
+          <div class="dl-card">
+            <div class="dl-icon-wrap">🎨</div>
+            <div class="dl-info">
+              <div class="dl-name">Midjourney Prompt Pack — 600 Image Prompts.xlsx</div>
+              <div class="dl-meta">12 categories · Portraits, Products, Branding, Abstract · Excel</div>
+            </div>
+            <a class="dl-btn" href="#" data-file="midjourney_xlsx">↓ Download</a>
+          </div>
+        </div>
+
+        <!-- ── HOW TO USE ───────────────────────── -->
+        <div class="howto-box">
+          <div class="howto-title">⚡ Quick Start Guide</div>
+          <div class="howto-steps">
+            <div class="howto-step">
+              <div class="howto-num">1</div>
+              <div class="howto-text"><strong>Download the Excel file</strong> and open it in Microsoft Excel, Google
+                Sheets, or LibreOffice.</div>
+            </div>
+            <div class="howto-step">
+              <div class="howto-num">2</div>
+              <div class="howto-text"><strong>Click any category in the Index tab</strong> — it jumps straight to that
+                sheet. No scrolling through tabs.</div>
+            </div>
+            <div class="howto-step">
+              <div class="howto-num">3</div>
+              <div class="howto-text"><strong>Find your prompt, fill in [BRACKETS]</strong> with your specific details.
+                Takes 30 seconds.</div>
+            </div>
+            <div class="howto-step">
+              <div class="howto-num">4</div>
+              <div class="howto-text"><strong>Open Claude at claude.ai</strong>, paste the completed prompt, press
+                enter. Get a specific, usable result.</div>
+            </div>
+            <div class="howto-step">
+              <div class="howto-num">5</div>
+              <div class="howto-text"><strong>Start with Bonus 1</strong> (Cheat Sheet PDF) — pin it next to your screen
+                for the 50 most-used prompts at a glance.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SUPPORT ──────────────────────────── -->
+        <div class="support-box">
+          <div class="support-text">Download not working? Have a question? 7-day money-back guarantee still applies.
+          </div>
+          <div><a href="mailto:productsupport@prodxstore.com" class="support-email">productsupport@prodxstore.com</a>
+          </div>
+          <div style="margin-top:14px;font-size:.76rem;color:var(--su)">Keep this page bookmarked — your links never
+            expire.</div>
+        </div>
+
+      </div><!-- /wrap -->
+    </div><!-- /content -->
+
+    <footer>
+      <a href="https://prodxstore.com" aria-label="ProdXStore — Digital Products Marketplace"><img
+          src="/assets/logo-full.png" alt="ProdXStore — Digital Products Marketplace"
+          style="height:54px;width:auto;margin:0 auto 10px;display:block" /></a>
+      <div style="font-size:.78rem;color:#888;margin-bottom:6px">Claude Prompt Pack is a <a
+          href="https://prodxstore.com" style="color:#FF6B35;text-decoration:none">ProdXStore</a> product</div>
+      © 2026 · prodxstore.com · Not affiliated with Anthropic
+    </footer>
+
+    <!-- ── JS ─────────────────────────────────────────────── -->
+    <script>
+      // ══════════════════════════════════════════════════════════
+      // STEP 1: Upload each file to Google Drive
+      // STEP 2: Right-click file -> Share -> "Anyone with the link"
+      // STEP 3: Copy the FILE ID from the share URL:
+      //         https://drive.google.com/file/d/  FILE_ID_IS_THIS_PART  /view
+      // STEP 4: Paste ONLY the ID between the quotes below
+      // ══════════════════════════════════════════════════════════
+      const FILE_IDS = {
+        claude_xlsx: '1-_m2ims8T8jrbANVX1D3cDyKwurH_qq4',   // Claude Prompt Pack — 4,560 Prompts.xlsx
+        bonus1: '1rYfYQtAaVnprwKTNxqFUWONR9c60MEc8',   // Bonus 1 — Claude Cheat Sheet.pdf
+        bonus2: '1Xrs3Gfk6o9YQKozyV6j3Lh6uwTjqtYeB',   // Bonus 2 — Prompt Engineering Mini-Guide.pdf
+        bonus3: '1nS0oYqD3x9TSDR3Zu0kRZbkhw1vvj6VY',   // Bonus 3 — AI Tools Starter Kit.pdf
+        bonus4: '1bVnHF3sY9BIo20fNPKY1fIHyOP2cyuo6',   // Bonus 4 — ChatGPT 100 Starter Prompts.pdf
+        chatgpt_xlsx: '10QlApeDhBp0KJWuvBuTYAGBnXl-e2MAZ',   // ChatGPT Prompt Pack — 2,000 Prompts.xlsx (bundle)
+        gemini_xlsx: '1P23_PxadUCj7UGD2HLypJ4XEUK1eqPLF',   // Gemini Prompt Pack — 1,500 Prompts.xlsx (bundle)
+        midjourney_xlsx: '1PbP8o1_5AtmNn09zpUZhpYo37oA2-qhJ',   // Midjourney Prompt Pack — 600 Prompts.xlsx (bundle)
+      };
+
+      const driveUrl = id => 'https://drive.google.com/uc?export=download&id=' + id;
+
+      // ── INIT PAGE ────────────────────────────────────────────
+      document.addEventListener('DOMContentLoaded', function () {
+        const params = new URLSearchParams(window.location.search);
+        const plan = params.get('plan') || 'base';
+        const pid = params.get('pid') || params.get('orderID') || '';
+
+        if (pid) {
+          const el = document.getElementById('order-id-display');
+          if (el) el.textContent = 'Order: ' + pid.slice(0, 16) + (pid.length > 16 ? '...' : '');
+        }
+
+        // Wire download buttons from FILE_IDS
+        document.querySelectorAll('a.dl-btn[data-file]').forEach(a => {
+          const id = FILE_IDS[a.dataset.file];
+          if (id) {
+            a.href = driveUrl(id);
+            a.target = '_blank';
+            a.rel = 'noopener';
+          } else {
+            a.addEventListener('click', function (e) {
+              e.preventDefault();
+              alert('This download link is being set up. Please use the links in your email, or contact productsupport@prodxstore.com and we will send your files right away.');
+            });
+          }
+        });
+
+        if (plan === 'bundle') {
+          document.getElementById('content').classList.add('show-bundle');
+          document.getElementById('plan-label').textContent = '\ud83d\ude80 Complete AI Bundle — Claude + ChatGPT + Gemini + Midjourney';
+          document.getElementById('plan-label').style.background = '#7B61FF';
+        } else {
+          document.getElementById('plan-label').textContent = 'Claude Prompt Pack + 4 Bonuses';
+        }
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
       });
-    }
-  });
-
-  if (plan === 'bundle') {
-    document.getElementById('content').classList.add('show-bundle');
-    document.getElementById('plan-label').textContent = '\ud83d\ude80 Complete AI Bundle — Claude + ChatGPT + Gemini + Midjourney';
-    document.getElementById('plan-label').style.background = '#7B61FF';
-  } else {
-    document.getElementById('plan-label').textContent = 'Claude Prompt Pack + 4 Bonuses';
-  }
-
-  document.getElementById('loading').style.display  = 'none';
-  document.getElementById('content').style.display  = 'block';
-});
-</script>
+    </script>
 </body>
+
 </html>
