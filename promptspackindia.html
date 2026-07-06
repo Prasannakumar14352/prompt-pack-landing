@@ -483,13 +483,13 @@ footer{padding:36px 20px;text-align:center;border-top:1px solid var(--border);po
     <div class="testi-grid">
       <div class="testi-card">
         <div class="stars">★★★★★</div>
-        <p class="testi-text">"Content likhna mera kaam hai but Claude se sahi output nahi milti thi. Is pack ke baad same time mein 3x kaam ho raha hai. Sales prompts ne meri cold email reply rate double kar di. ₹399 mein yeh ROI? Seriously unbelievable."</p>
+        <p class="testi-text">"Writing content is my job, but I could never get the right output from Claude. After this pack I get 3x more done in the same time. The sales prompts doubled my cold email reply rate. This ROI for ₹399? Seriously unbelievable."</p>
         <div class="testi-name">Priya K.</div>
         <div class="testi-role">Freelance Content Writer, Pune</div>
       </div>
       <div class="testi-card">
         <div class="stars">★★★★★</div>
-        <p class="testi-text">"Main ek startup run karta hun — akele saari teams ka kaam karna padta hai. Is pack se mera daily workflow completely change ho gaya. Index tab se directly jump karo, prompt lo, fill karo — 10 minute ka kaam 2 minute mein."</p>
+        <p class="testi-text">"I run a startup alone — I have to do the work of every team myself. This pack completely changed my daily workflow. Jump from the index tab, grab a prompt, fill it in — a 10-minute task now takes 2 minutes."</p>
         <div class="testi-name">Rahul M.</div>
         <div class="testi-role">Startup Founder, Delhi</div>
       </div>
@@ -513,27 +513,27 @@ footer{padding:36px 20px;text-align:center;border-top:1px solid var(--border);po
         <div class="wa-phone">
           <div class="wa-top"><div class="wa-avatar">S</div><div class="wa-meta"><div class="wa-nm">Sneha • Content Writer</div><div class="wa-status">online</div></div></div>
           <div class="wa-body">
-            <div class="wa-msg them">Bhai pack mil gaya, thank you! 🙏</div>
+            <div class="wa-msg them">Got the pack, thank you so much! 🙏</div>
             <div class="wa-msg">Glad it reached you Sneha! Do try the Content category first 🙂<span class="t">2:14 PM <span class="wa-tick">✓✓</span></span></div>
-            <div class="wa-msg them">Already used 5 prompts today. Blog intros ab 2 min mein ready 🔥 4,560 is INSANE for ₹399</div>
+            <div class="wa-msg them">Already used 5 prompts today. Blog intros ready in 2 min now 🔥 4,560 is INSANE for ₹399</div>
           </div>
         </div>
 
         <div class="wa-phone">
           <div class="wa-top"><div class="wa-avatar">V</div><div class="wa-meta"><div class="wa-nm">Vikram • Startup Founder</div><div class="wa-status">online</div></div></div>
           <div class="wa-body">
-            <div class="wa-msg them">Payment ho gaya but download kaise karun?</div>
+            <div class="wa-msg them">Payment done — how do I download?</div>
             <div class="wa-msg">Check the thank-you page + your email — direct Drive links there 👍<span class="t">11:02 AM <span class="wa-tick">✓✓</span></span></div>
-            <div class="wa-msg them">Got it! Excel format ekdum organized hai. Sales + marketing prompts worth the money alone 💯</div>
+            <div class="wa-msg them">Got it! Excel format is so organized. Sales + marketing prompts are worth the money alone 💯</div>
           </div>
         </div>
 
         <div class="wa-phone">
           <div class="wa-top"><div class="wa-avatar">A</div><div class="wa-meta"><div class="wa-nm">Ananya • Digital Marketer</div><div class="wa-status">online</div></div></div>
           <div class="wa-body">
-            <div class="wa-msg them">Is it really 4560 prompts?? 😳</div>
+            <div class="wa-msg them">Is it really 4,560 prompts?? 😳</div>
             <div class="wa-msg">Yes! 20 categories, all fill-in-the-blank ready ✨<span class="t">6:47 PM <span class="wa-tick">✓✓</span></span></div>
-            <div class="wa-msg them">Bonuses bhi mile 4 PDFs. Paisa vasool. Sharing with my team 🙌</div>
+            <div class="wa-msg them">Got 4 bonus PDFs too. Totally worth it. Sharing with my team 🙌</div>
           </div>
         </div>
 
@@ -832,7 +832,7 @@ function payWithRazorpay() {
 (function() {
   const KEY = 'pp_dl_india';
   let dl = +localStorage.getItem(KEY);
-  if (!dl || dl < Date.now()) { dl = Date.now() + 2*60*60*1000; localStorage.setItem(KEY, dl); }
+  if (!dl || dl < Date.now()) { dl = Date.now() + 1*60*60*1000; localStorage.setItem(KEY, dl); }
   const pad = n => String(n).padStart(2,'0');
   function tick() {
     const diff = Math.max(0, dl - Date.now());

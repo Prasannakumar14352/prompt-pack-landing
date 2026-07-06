@@ -853,7 +853,7 @@ function renderPayPal() {
 (function() {
   const KEY = 'pp_dl_intl';
   let dl = +localStorage.getItem(KEY);
-  if (!dl || dl < Date.now()) { dl = Date.now() + 2*60*60*1000; localStorage.setItem(KEY, dl); }
+  if (!dl || dl < Date.now()) { dl = Date.now() + 1*60*60*1000; localStorage.setItem(KEY, dl); }
   const pad = n => String(n).padStart(2,'0');
   function tick() {
     const diff = Math.max(0, dl - Date.now());
