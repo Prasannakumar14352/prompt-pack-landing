@@ -29,8 +29,8 @@ You need **3 separate Payment Pages** (or Payment Buttons), one per tier, becaus
    - `<!-- RAZORPAY_BUTTON_PRO -->`
    - `<!-- RAZORPAY_BUTTON_RESELLER -->`
 
-   (Currently those buttons call `payWithRazorpay('starter'|'pro'|'reseller')` in `script.js`, which opens Razorpay's Checkout.js modal directly using `CFG.RZP_KEY` and the tier's amount. If you'd rather link straight to a Payment Page instead of the modal, replace the `<button onclick="payWithRazorpay(...)">` with `<a href="https://rzp.io/l/your-page-link">` and keep the same visible button copy/price.)
-6. Set your live key in `script.js` → `CFG.RZP_KEY`.
+   (Those buttons call `payWithRazorpay('starter'|'pro'|'reseller')` in `script.js`, which simply redirects the browser to `CFG.TIERS[tier].url` — the matching Payment Page link you paste in step 6 below. No Razorpay SDK, no key, no modal.)
+6. In `script.js` → `CFG.TIERS`, replace each tier's placeholder URL (`[STARTER_PAYMENT_PAGE_URL]`, `[PRO_PAYMENT_PAGE_URL]`, `[RESELLER_PAYMENT_PAGE_URL]`) with that tier's real Payment Page link from step 3.
 
 ---
 
@@ -99,15 +99,15 @@ Do this **before** any paid traffic hits the page:
 - [ ] Confirm the delivery email actually lands in the test buyer's inbox (check spam) within 2 minutes, with the correct Drive links for that tier.
 - [ ] Click every Drive link in both the email and the thank-you page — confirm they open and are shared as "Anyone with the link → Viewer" (not restricted).
 - [ ] Repeat the above for **all 3 tiers** — a passing Starter test does not guarantee Pro/Reseller are wired correctly, since each is a separate branch and separate amount filter.
-- [ ] Only after all 3 tiers pass, switch Razorpay back to Live Mode and update `CFG.RZP_KEY` in `script.js` to the live key.
+- [ ] Only after all 3 tiers pass, switch each Payment Page from Test Mode to Live Mode and update the 3 `CFG.TIERS[tier].url` values in `script.js` to the live Payment Page links.
 
 ---
 
 ## Placeholders still to fill in before launch
 
-- `script.js` → `CFG.RZP_KEY`
+- `script.js` → `CFG.TIERS.starter.url`, `CFG.TIERS.pro.url`, `CFG.TIERS.reseller.url` (your 3 Razorpay Payment Page links)
 - `script.js` → `CFG.SUPPORT_EMAIL`, `CFG.INSTAGRAM`, `CFG.YOUTUBE`
-- `script.js` → `CFG.LAUNCH_DEADLINE_ISO` (set to your real launch-price end date)
+- `script.js` → `CFG.LAUNCH_WINDOW_MINUTES` (per-visitor countdown length, in minutes)
 - `thank-you.html` → `DELIVERY` object: `[DRIVE_STARTER]`, `[DRIVE_PRO]`, `[DRIVE_BONUSES]`, `[DRIVE_RESELLER]`
 - `index.html` / `thank-you.html` → `<!-- META_PIXEL_CODE -->` (paste your Meta Pixel base code)
 - `index.html` → `<!-- RAZORPAY_BUTTON_STARTER/PRO/RESELLER -->` (Payment Page links, if not using the built-in Checkout.js modal)

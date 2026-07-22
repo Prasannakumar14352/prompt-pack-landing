@@ -3,12 +3,10 @@
    CONFIG — every editable price/link lives here.
    ══════════════════════════════════════════════════════════ */
 const CFG = {
-  RZP_KEY:   'rzp_live_TDTzlb5X0yeCIY', // [PLACEHOLDER] Razorpay public key
-  // RZP_KEY: 'rzp_test_TBrznoDsNcFNSB',
   TIERS: {
-    starter: { amount: 19900, label: 'Starter Pack', redirect: 'thank-you.html?tier=starter' },
-    pro: { amount: 49900, label: 'Pro Pack', redirect: 'thank-you.html?tier=pro' },
-    reseller: { amount: 149900, label: 'Reseller Pack', redirect: 'thank-you.html?tier=reseller' },
+    starter: { label: 'Starter Pack', url: '[STARTER_PAYMENT_PAGE_URL]' },
+    pro: { label: 'Pro Pack', url: '[PRO_PAYMENT_PAGE_URL]' },
+    reseller: { label: 'Reseller Pack', url: '[RESELLER_PAYMENT_PAGE_URL]' },
   },
   // Per-visitor launch-price countdown, in minutes. The deadline is set the
   // moment a visitor first lands and persisted in localStorage, so it keeps
@@ -181,36 +179,11 @@ function goTo(id) {
 }
 window.goTo = goTo;
 
-/* ── RAZORPAY CHECKOUT (placeholder wiring) ───────────────── */
+/* ── RAZORPAY PAYMENT PAGE REDIRECT ───────────────────────── */
 function payWithRazorpay(tierKey) {
   const tier = CFG.TIERS[tierKey];
-  if (!tier || typeof Razorpay === 'undefined') {
-    window.location.href = tier ? tier.redirect : 'thank-you.html';
-    return;
-  }
-  // const rzp = new Razorpay({
-  //   key: CFG.RZP_KEY,
-  //   amount: tier.amount,
-  //   currency: 'INR',
-  //   name: 'ProdX Store',
-  //   description: '100,000+ AI Mega Prompts Pack — ' + tier.label,
-  //   theme: { color: '#FF6B35' },
-  //   handler(r) { window.location.href = tier.redirect + '&pid=' + r.razorpay_payment_id; },
-  //   modal: { ondismiss() {} },
-  // });
-  const rzp = new Razorpay({
-    key: CFG.RZP_KEY,
-    amount: tier.amount,
-    currency: 'INR',
-    name: 'ProdX Store',
-    description: '100,000+ AI Mega Prompts Pack — ' + tier.label,
-    theme: { color: '#FF6B35' },
-    notes: { tier: tierKey },          // ← add this
-    handler(r) { window.location.href = tier.redirect + '&pid=' + r.razorpay_payment_id; },
-    modal: { ondismiss() { } },
-  });
-  rzp.on('payment.failed', r => alert('Payment failed: ' + r.error.description));
-  rzp.open();
+  if (!tier) return;
+  window.location.href = tier.url;
 }
 window.payWithRazorpay = payWithRazorpay;
 
