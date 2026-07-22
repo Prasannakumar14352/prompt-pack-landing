@@ -67,7 +67,7 @@ You need **3 separate Payment Pages** (or Payment Buttons), one per tier, becaus
 
 4. **Route 2 — Pro (₹499)**
    - Filter: `payload.payment.entity.amount` **Equal to** `49900`, `event` = `payment.captured`.
-   - Email module → To: `payload.payment.entity.email` → include `[DRIVE_PRO]` (full pack + Notion database) and `[DRIVE_BONUSES]` (all 6 bonuses) links.
+   - Email module → To: `payload.payment.entity.email` → include `[DRIVE_PRO]` (full pack) and `[DRIVE_BONUSES]` (all 5 bonuses) links.
 
 5. **Route 3 — Reseller (₹1,499)**
    - Filter: `payload.payment.entity.amount` **Equal to** `149900`, `event` = `payment.captured`.

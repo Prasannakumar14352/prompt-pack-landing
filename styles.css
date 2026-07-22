@@ -181,8 +181,10 @@ nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,.9); bac
 .code-var { color: var(--or); font-weight: 700 }
 
 /* ── BONUS CARDS ─────────────────────────────────────────── */
-.bonus-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px; margin-top: 36px }
-.bonus-card { background: var(--s1); border: 1px solid var(--border); border-radius: var(--rd); overflow: hidden; position: relative }
+/* flex + justify-content:center (not grid) so a partial last row (5 cards = 3+2)
+   centers itself instead of hugging the left edge */
+.bonus-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 36px }
+.bonus-card { background: var(--s1); border: 1px solid var(--border); border-radius: var(--rd); overflow: hidden; position: relative; flex: 1 1 240px; max-width: 340px }
 .bonus-top { height: 4px }
 .bonus-body { padding: 20px }
 .bonus-num { display: inline-block; font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; margin-bottom: 12px }
