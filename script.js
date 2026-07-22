@@ -3,8 +3,8 @@
    CONFIG — every editable price/link lives here.
    ══════════════════════════════════════════════════════════ */
 const CFG = {
-  RZP_KEY:   'rzp_live_TDTzlb5X0yeCIY', // [PLACEHOLDER] Razorpay public key
-  // RZP_KEY: 'rzp_test_TBrznoDsNcFNSB',
+  // RZP_KEY:   'rzp_live_TDTzlb5X0yeCIY', // [PLACEHOLDER] Razorpay public key
+  RZP_KEY: 'rzp_test_TBrznoDsNcFNSB',
   TIERS: {
     starter: { amount: 19900, label: 'Starter Pack', redirect: 'thank-you.html?tier=starter' },
     pro: { amount: 49900, label: 'Pro Pack', redirect: 'thank-you.html?tier=pro' },
