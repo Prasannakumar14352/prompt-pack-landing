@@ -4,9 +4,9 @@
    ══════════════════════════════════════════════════════════ */
 const CFG = {
   TIERS: {
-    starter: { label: 'Starter Pack', url: '[STARTER_PAYMENT_PAGE_URL]' },
-    pro: { label: 'Pro Pack', url: '[PRO_PAYMENT_PAGE_URL]' },
-    reseller: { label: 'Reseller Pack', url: '[RESELLER_PAYMENT_PAGE_URL]' },
+    starter: { label: 'Starter Pack', url: 'https://rzp.io/rzp/8N6oTL0' },
+    pro: { label: 'Pro Pack', url: 'https://rzp.io/rzp/8N6oTL0' },
+    reseller: { label: 'Reseller Pack', url: 'https://rzp.io/rzp/8N6oTL0' },
   },
   // Per-visitor launch-price countdown, in minutes. The deadline is set the
   // moment a visitor first lands and persisted in localStorage, so it keeps
