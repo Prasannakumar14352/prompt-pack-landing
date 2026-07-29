@@ -1,36 +1,23 @@
 # Delivery Setup — 100,000+ AI Mega Prompts Pack
 
-No backend, no database. Delivery runs on: **Razorpay Payment Pages → Webhook → Make.com → Email**, plus an immediate on-page download on `thank-you.html`. This doc is the step-by-step to wire that up. Claude cannot create these accounts/scenarios for you — follow this manually.
+No backend, no database. Single product, single price (₹299). Delivery runs on: **one Razorpay Payment Page → Webhook → Make.com → Email**, plus an immediate on-page download on `thank-you.html`. This doc is the step-by-step to wire that up. Claude cannot create these accounts/scenarios for you — follow this manually.
 
 ---
 
-## (a) Create the 3 Razorpay Payment Pages
-
-You need **3 separate Payment Pages** (or Payment Buttons), one per tier, because the amount is how the Make scenario later tells tiers apart.
+## (a) Create the Razorpay Payment Page
 
 1. Log in to the [Razorpay Dashboard](https://dashboard.razorpay.com/) → **Payment Pages** → **+ New Payment Page**.
-2. Create three, with these exact amounts (amount fields must match `script.js` / this doc exactly):
-
-   | Page name | Amount | Amount in paise |
-   |---|---|---|
-   | Mega Prompts — Starter | ₹199 | 19900 |
-   | Mega Prompts — Pro | ₹499 | 49900 |
-   | Mega Prompts — Reseller | ₹1,499 | 149900 |
-
-3. For each page, under **Advanced Settings → Redirect URL after payment**, set:
-   - Starter → `https://<your-domain>/mega-pack/thank-you.html?tier=starter`
-   - Pro → `https://<your-domain>/mega-pack/thank-you.html?tier=pro`
-   - Reseller → `https://<your-domain>/mega-pack/thank-you.html?tier=reseller`
+2. Set the amount to **₹299** (29900 paise). If you're reusing an existing Payment Page that was previously ₹499, edit its amount field to 299 — don't leave it at 499.
+3. Under **Advanced Settings → Redirect URL after payment**, set:
+   - `https://<your-domain>/mega-pack/thank-you.html`
 
    Razorpay appends its own payment ID param automatically — `thank-you.html` reads `pid` from the URL if present, so it's fine either way.
-4. Make sure **"Collect email"** is turned ON for every page — the buyer's email is how the Make scenario knows where to send download links.
-5. Copy each page's short link (or embed code) and drop it into `index.html` where you see:
-   - `<!-- RAZORPAY_BUTTON_STARTER -->`
-   - `<!-- RAZORPAY_BUTTON_PRO -->`
-   - `<!-- RAZORPAY_BUTTON_RESELLER -->`
+4. Make sure **"Collect email"** is turned ON — the buyer's email is how the Make scenario knows where to send download links.
+5. Copy the page's short link and drop it into `index.html` where you see:
+   - `<!-- RAZORPAY_PAYMENT_PAGE -->`
 
-   (Those buttons call `payWithRazorpay('starter'|'pro'|'reseller')` in `script.js`, which simply redirects the browser to `CFG.TIERS[tier].url` — the matching Payment Page link you paste in step 6 below. No Razorpay SDK, no key, no modal.)
-6. In `script.js` → `CFG.TIERS`, replace each tier's placeholder URL (`[STARTER_PAYMENT_PAGE_URL]`, `[PRO_PAYMENT_PAGE_URL]`, `[RESELLER_PAYMENT_PAGE_URL]`) with that tier's real Payment Page link from step 3.
+   (That button calls `payWithRazorpay()` in `script.js`, which simply redirects the browser to `CFG.PRODUCT.url`. No Razorpay SDK, no key, no modal.)
+6. In `script.js` → `CFG.PRODUCT.url`, paste that same Payment Page link.
 
 ---
 
@@ -47,43 +34,30 @@ You need **3 separate Payment Pages** (or Payment Buttons), one per tier, becaus
 
 ## (c) Build the Make.com scenario
 
-**Structure: Webhook → Router → 3 amount-filtered branches → Email module per branch.**
+**Structure: Webhook → Email. No Router needed — there's only one product and one price, so nothing to branch on.**
 
 1. **Trigger — Custom Webhook**
    - Make.com → Scenarios → **+ Create a new scenario** → search module **Webhooks → Custom webhook** → **Add** → name it (e.g. "Mega Pack Delivery") → copy the generated URL → paste it into Razorpay's webhook URL field from step (b.2).
    - Run the scenario once in "listen" mode and send one real test payment (see checklist below) so Make captures the payload structure — this lets you map fields with the point-and-click picker instead of typing paths blind.
 
-2. **Router**
-   - Add a **Router** module right after the webhook trigger. Create 3 routes.
+2. **(Optional but recommended) Filter**
+   - Add a filter on the webhook's output: `event` **Equal to** `payment.captured`, and `payload.payment.entity.amount` **Equal to** `29900` — this guards against any other event type or a stale/mistaken amount ever triggering delivery.
 
-3. **Route 1 — Starter (₹199)**
-   - Add a filter on the router branch:
-     - `payload.payment.entity.amount` **Equal to** `19900`
-   - Also filter `event` **Equal to** `payment.captured` (belt-and-braces, in case other events reach the same webhook later).
-   - Add an **Email → Send an email** module:
-     - To: map `payload.payment.entity.email`
-     - Subject: "Your 10,000 AI Prompts are ready 🎉"
-     - Body: include the `[DRIVE_STARTER]` Google Drive link (replace the placeholder with your real share link before sending).
+3. **Email → Send an email**
+   - To: map `payload.payment.entity.email`
+   - Subject: "Your 100,000+ AI Prompts are ready 🎉"
+   - Body: include the `[DRIVE_PRO]` (full pack) and `[DRIVE_BONUSES]` (all 5 bonuses) Google Drive links — replace both placeholders with your real share links before going live.
 
-4. **Route 2 — Pro (₹499)**
-   - Filter: `payload.payment.entity.amount` **Equal to** `49900`, `event` = `payment.captured`.
-   - Email module → To: `payload.payment.entity.email` → include `[DRIVE_PRO]` (full pack) and `[DRIVE_BONUSES]` (all 5 bonuses) links.
-
-5. **Route 3 — Reseller (₹1,499)**
-   - Filter: `payload.payment.entity.amount` **Equal to** `149900`, `event` = `payment.captured`.
-   - Email module → To: `payload.payment.entity.email` → include `[DRIVE_PRO]`, `[DRIVE_BONUSES]`, and `[DRIVE_RESELLER]` (PLR/commercial resell rights document) links.
-
-6. Turn the scenario **ON** (top-right toggle) so it runs automatically, not just in listen/test mode.
+4. Turn the scenario **ON** (top-right toggle) so it runs automatically, not just in listen/test mode.
 
 **Field path reference** (also documented at the top of `thank-you.html`):
 ```
 event                = payment.captured
 buyer email          = payload.payment.entity.email
-amount (in paise)    = payload.payment.entity.amount
-  → 19900  = ₹199  (Starter)
-  → 49900  = ₹499  (Pro)
-  → 149900 = ₹1,499 (Reseller)
+amount (in paise)    = payload.payment.entity.amount   → expect 29900 (₹299)
 ```
+
+**Never trust a price sent by the browser.** The amount your Make filter checks against (29900) comes from Razorpay's own webhook payload — set server-side when you configured the Payment Page in step (a) — not from anything the page or buyer submitted. If you ever add a second product, give it its own Payment Page with its own fixed amount rather than accepting a client-supplied price.
 
 ---
 
@@ -91,25 +65,25 @@ amount (in paise)    = payload.payment.entity.amount
 
 Do this **before** any paid traffic hits the page:
 
-- [ ] Switch Razorpay to **Test Mode** (or create one real ₹1 live Payment Page temporarily) and complete a checkout end-to-end.
-- [ ] Confirm the browser redirects to `thank-you.html?tier=<correct tier>` after payment — check the tier in the URL matches the amount you paid.
-- [ ] Confirm `thank-you.html` shows **only that tier's** download cards (Starter shows 1 card, Pro shows 3, Reseller shows 4) and the Reseller upgrade card appears for Starter/Pro but not Reseller.
+- [ ] Switch the Payment Page to **Test Mode** (or pay ₹1 on a temporary test page) and complete a checkout end-to-end.
+- [ ] Confirm the browser redirects to `thank-you.html` after payment.
+- [ ] Confirm `thank-you.html` shows the single download card and no reseller/upgrade content.
 - [ ] Confirm the Razorpay webhook fired — check **Razorpay Dashboard → Webhooks → (your webhook) → Logs** for a `200 OK` delivery.
-- [ ] Confirm the Make.com scenario run history shows a successful execution, routed to the correct branch (check the amount matched the tier you paid for).
-- [ ] Confirm the delivery email actually lands in the test buyer's inbox (check spam) within 2 minutes, with the correct Drive links for that tier.
+- [ ] Confirm the Make.com scenario run history shows a successful execution.
+- [ ] Confirm the delivery email actually lands in the test buyer's inbox (check spam) within 2 minutes, with the correct Drive links.
 - [ ] Click every Drive link in both the email and the thank-you page — confirm they open and are shared as "Anyone with the link → Viewer" (not restricted).
-- [ ] Repeat the above for **all 3 tiers** — a passing Starter test does not guarantee Pro/Reseller are wired correctly, since each is a separate branch and separate amount filter.
-- [ ] Only after all 3 tiers pass, switch each Payment Page from Test Mode to Live Mode and update the 3 `CFG.TIERS[tier].url` values in `script.js` to the live Payment Page links.
+- [ ] Confirm the amount charged was exactly **₹299** (29900 paise) — check the Razorpay payment record, not just the page copy.
+- [ ] Only after the test passes, switch the Payment Page from Test Mode to Live Mode and confirm `CFG.PRODUCT.url` in `script.js` points at the live link.
 
 ---
 
 ## Placeholders still to fill in before launch
 
-- `script.js` → `CFG.TIERS.starter.url`, `CFG.TIERS.pro.url`, `CFG.TIERS.reseller.url` (your 3 Razorpay Payment Page links)
+- `script.js` → `CFG.PRODUCT.url` (your live ₹299 Razorpay Payment Page link)
 - `script.js` → `CFG.SUPPORT_EMAIL`, `CFG.INSTAGRAM`, `CFG.YOUTUBE`
 - `script.js` → `CFG.LAUNCH_WINDOW_MINUTES` (per-visitor countdown length, in minutes)
-- `thank-you.html` → `DELIVERY` object: `[DRIVE_STARTER]`, `[DRIVE_PRO]`, `[DRIVE_BONUSES]`, `[DRIVE_RESELLER]`
+- `thank-you.html` → `DELIVERY` array: `[DRIVE_PRO]`, `[DRIVE_BONUSES]`
 - `index.html` / `thank-you.html` → `<!-- META_PIXEL_CODE -->` (paste your Meta Pixel base code)
-- `index.html` → `<!-- RAZORPAY_BUTTON_STARTER/PRO/RESELLER -->` (Payment Page links, if not using the built-in Checkout.js modal)
+- `index.html` → `<!-- RAZORPAY_PAYMENT_PAGE -->` (marks where the checkout button lives)
 - `index.html` footer → `[SUPPORT_EMAIL]`
 - `index.html` testimonials → `[TESTIMONIAL_1..6]`, `[NAME_1..6]`, `[ROLE_1..6]`

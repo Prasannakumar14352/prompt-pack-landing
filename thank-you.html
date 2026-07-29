@@ -2,23 +2,19 @@
   EMAIL / DELIVERY FLOW (no backend, no database) — see DELIVERY_SETUP.md for
   the full step-by-step. Summary for the Make.com scenario:
 
-  1. Buyer pays via a Razorpay Payment Button / Payment Page on index.html
-     (one page per tier: Starter ₹199 / Pro ₹499 / Reseller ₹1,499).
+  1. Buyer pays ₹299 via the single Razorpay Payment Page linked from index.html.
   2. Razorpay fires a webhook on event = "payment.captured".
-  3. A Make.com scenario (Webhook → Router → Email) reads these exact fields
-     from the webhook payload:
+  3. A Make.com scenario (Webhook → Email) reads these exact fields from the
+     webhook payload:
        - event               = payment.captured
        - buyer email         = payload.payment.entity.email
-       - amount (in paise)   = payload.payment.entity.amount
-  4. The Router has 3 branches, filtered on that amount field:
-       - amount = 19900   → ₹199  → Starter branch  → send [DRIVE_STARTER]
-       - amount = 49900   → ₹499  → Pro branch      → send [DRIVE_PRO] + [DRIVE_BONUSES]
-       - amount = 149900  → ₹1499 → Reseller branch → send [DRIVE_PRO] + [DRIVE_BONUSES] + [DRIVE_RESELLER]
-     Each branch's Email module sends to the buyer email captured above.
-  5. Razorpay's checkout success handler also redirects the browser to
-     thank-you.html?tier=starter|pro|reseller&pid=<razorpay_payment_id>, so
-     this page can show the same download links immediately — buyers don't
-     have to wait on the email.
+       - amount (in paise)   = payload.payment.entity.amount  (expect 29900)
+     No router/branching needed — there is only one product and one price now.
+     The Email module sends [DRIVE_PRO] + [DRIVE_BONUSES] to the buyer email
+     captured above.
+  4. Razorpay's Payment Page redirect also lands the browser on
+     thank-you.html?pid=<razorpay_payment_id>, so this page can show the same
+     download links immediately — buyers don't have to wait on the email.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -68,13 +64,6 @@
     <div id="dl-list" style="display:flex;flex-direction:column;gap:8px;margin-top:12px"></div>
   </div>
 
-  <!-- RESELLER UPGRADE (hidden for reseller tier) -->
-  <div id="reseller-upgrade" class="value-box" style="margin-top:32px;display:none">
-    <div class="h3" style="margin-bottom:6px">Want to resell this pack?</div>
-    <p class="sub" style="margin-bottom:16px">Upgrade to Reseller for full commercial / PLR rights — rebrand it and sell it as your own.</p>
-    <a class="btn btn-primary btn-full" href="index.html#pricing">Upgrade to Reseller — ₹1,499 →</a>
-  </div>
-
   <!-- FOLLOW -->
   <div style="text-align:center;margin:36px 0;display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
     <a href="[INSTAGRAM]" class="btn btn-ghost" style="padding:10px 22px;font-size:.85rem;min-height:44px">📸 Follow on Instagram</a>
@@ -93,41 +82,27 @@
 </footer>
 
 <script>
-/* Delivery links — one Drive link per tier/bundle. Replace before going live. */
-const DELIVERY = {
-  starter: [
-    { icon: '📊', name: 'Starter Pack — 10,000 Prompts', meta: '10 categories · Excel', href: 'https://drive.google.com/uc?export=download&id=1NIywrV8-MNqBxBna9_-DgoALEtEjM8Ql' },
-  ],
-  pro: [
-    { icon: '📦', name: 'Pro Pack — 100,000+ Prompts + 5 Bonuses', meta: 'Full library · Excel + PDFs', href: 'https://drive.google.com/uc?export=download&id=1ZI7z9naMHbAv9bWA-ERxL2HdMla2wYnP' },
-  ],
-  reseller: [
-    { icon: '👑', name: 'Reseller Edition — Full Pack + Resell Rights', meta: 'Everything + PLR + marketing kit', href: 'https://drive.google.com/uc?export=download&id=1SHrrbrCTcRvLNttPhvSDLni0mpuLRkvB' },
-  ],
-};
+/* Delivery links — single product, single download set. Replace before going live. */
+const DELIVERY = [
+  { icon: '📊', name: '100,000+ Mega Prompts Pack.xlsx', meta: '25+ categories · Excel workbooks', href: '[DRIVE_PRO]' },
+  { icon: '🎁', name: 'All 5 Bonuses', meta: 'Ebook, cheatsheets, templates, guides', href: '[DRIVE_BONUSES]' },
+];
 
-const LABELS = {
-  starter: 'Starter Pack — 10,000 Prompts',
-  pro: 'Pro Pack — 100,000+ Prompts + All 5 Bonuses',
-  reseller: 'Reseller Pack — Everything + Commercial Rights',
-};
-
-/* Amounts in INR (not paise) — used only for the Meta Pixel Purchase event below. */
-const AMOUNT_INR = { starter: 199, pro: 499, reseller: 1499 };
+const PRODUCT_LABEL = '100,000+ AI Mega Prompts Pack';
+const AMOUNT_INR = 299; // used only for the Meta Pixel Purchase event below
 
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
-  const tier = DELIVERY[params.get('tier')] ? params.get('tier') : 'pro';
   const pid = params.get('pid') || '';
 
   if (pid) {
     document.getElementById('order-id-display').textContent = 'Order: ' + pid.slice(0, 16) + (pid.length > 16 ? '…' : '');
   }
 
-  document.getElementById('plan-label').textContent = LABELS[tier];
+  document.getElementById('plan-label').textContent = PRODUCT_LABEL;
 
   const list = document.getElementById('dl-list');
-  DELIVERY[tier].forEach(item => {
+  DELIVERY.forEach(item => {
     const row = document.createElement('div');
     row.style.cssText = 'background:var(--s1);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;overflow:hidden';
     row.innerHTML = `
@@ -141,17 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
     list.appendChild(row);
   });
 
-  if (tier !== 'reseller') {
-    document.getElementById('reseller-upgrade').style.display = 'block';
-  }
-
-  // Fire Meta Pixel Purchase event now that tier/amount is known.
+  // Fire Meta Pixel Purchase event.
   if (typeof fbq === 'function') {
     fbq('track', 'Purchase', {
-      value: AMOUNT_INR[tier],
+      value: AMOUNT_INR,
       currency: 'INR',
-      content_name: LABELS[tier],
-      content_ids: [tier],
+      content_name: PRODUCT_LABEL,
     });
   }
 });

@@ -3,11 +3,8 @@
    CONFIG — every editable price/link lives here.
    ══════════════════════════════════════════════════════════ */
 const CFG = {
-  TIERS: {
-    starter: { label: 'Starter Pack', url: 'https://rzp.io/rzp/8N6oTL0' },
-    pro: { label: 'Pro Pack', url: 'https://rzp.io/rzp/fN3ZBRhC' },
-    reseller: { label: 'Reseller Pack', url: 'https://rzp.io/rzp/Reseller_pack' },
-  },
+  // Single product, single Razorpay Payment Page — no tiers.
+  PRODUCT: { label: '100,000+ AI Mega Prompts Pack', url: '[PAYMENT_PAGE_URL]' },
   // Per-visitor launch-price countdown, in minutes. The deadline is set the
   // moment a visitor first lands and persisted in localStorage, so it keeps
   // counting down across refreshes instead of resetting to this value every
@@ -180,10 +177,8 @@ function goTo(id) {
 window.goTo = goTo;
 
 /* ── RAZORPAY PAYMENT PAGE REDIRECT ───────────────────────── */
-function payWithRazorpay(tierKey) {
-  const tier = CFG.TIERS[tierKey];
-  if (!tier) return;
-  window.location.href = tier.url;
+function payWithRazorpay() {
+  window.location.href = CFG.PRODUCT.url;
 }
 window.payWithRazorpay = payWithRazorpay;
 
