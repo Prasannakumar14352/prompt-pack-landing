@@ -4,7 +4,7 @@
    ══════════════════════════════════════════════════════════ */
 const CFG = {
   // Single product, single Razorpay Payment Page — no tiers.
-  PRODUCT: { label: '100,000+ AI Mega Prompts Pack', url: '[PAYMENT_PAGE_URL]' },
+  PRODUCT: { label: '100,000+ AI Mega Prompts Pack', url: 'https://rzp.io/rzp/fN3ZBRhC' },
   // Per-visitor launch-price countdown, in minutes. The deadline is set the
   // moment a visitor first lands and persisted in localStorage, so it keeps
   // counting down across refreshes instead of resetting to this value every
