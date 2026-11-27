@@ -1,20 +1,11 @@
 <!--
-  EMAIL / DELIVERY FLOW (no backend, no database) — see DELIVERY_SETUP.md for
-  the full step-by-step. Summary for the Make.com scenario:
-
-  1. Buyer pays ₹299 via the single Razorpay Payment Page linked from index.html.
-  2. Razorpay fires a webhook on event = "payment.captured".
-  3. A Make.com scenario (Webhook → Email) reads these exact fields from the
-     webhook payload:
-       - event               = payment.captured
-       - buyer email         = payload.payment.entity.email
-       - amount (in paise)   = payload.payment.entity.amount  (expect 29900)
-     No router/branching needed — there is only one product and one price now.
-     The Email module sends [DRIVE_PRO] + [DRIVE_BONUSES] to the buyer email
-     captured above.
-  4. Razorpay's Payment Page redirect also lands the browser on
-     thank-you.html?pid=<razorpay_payment_id>, so this page can show the same
-     download links immediately — buyers don't have to wait on the email.
+  DELIVERY FLOW
+  1. Buyer pays ₹399 at pay.prodxstore.com/checkout/ai-mega-prompts-pack
+     (shared ProdXStore Razorpay checkout; price set in hq.prodxstore.com/store).
+  2. After a verified payment the checkout redirects here, and this page shows
+     the download link straight away.
+  Note: the old Make.com email scenario routes by amount and has no ₹399 route,
+  so delivery for this product is this page. See DELIVERY_SETUP.md (legacy).
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -82,14 +73,13 @@
 </footer>
 
 <script>
-/* Delivery links — single product, single download set. Replace before going live. */
+/* Delivery link — same Google Drive file the delivery email sends. */
 const DELIVERY = [
-  { icon: '📊', name: '100,000+ Mega Prompts Pack.xlsx', meta: '25+ categories · Excel workbooks', href: '[DRIVE_PRO]' },
-  { icon: '🎁', name: 'All 5 Bonuses', meta: 'Ebook, cheatsheets, templates, guides', href: '[DRIVE_BONUSES]' },
+  { icon: '📊', name: '100,000+ Mega Prompts Pack + all 5 bonuses', meta: '25+ categories · Excel workbooks · ebook, cheatsheets, templates, guides', href: 'https://drive.google.com/file/d/1ZI7z9naMHbAv9bWA-ERxL2HdMla2wYnP/view?usp=drive_link' },
 ];
 
 const PRODUCT_LABEL = '100,000+ AI Mega Prompts Pack';
-const AMOUNT_INR = 299; // used only for the Meta Pixel Purchase event below
+const AMOUNT_INR = 399; // used only for the Meta Pixel Purchase event below
 
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
