@@ -3,8 +3,10 @@
    CONFIG — every editable price/link lives here.
    ══════════════════════════════════════════════════════════ */
 const CFG = {
-  // Single product, single Razorpay Payment Page — no tiers.
-  PRODUCT: { label: '100,000+ AI Mega Prompts Pack', url: 'https://rzp.io/rzp/fN3ZBRhC' },
+  // Single product, sold through the shared ProdXStore checkout. The price
+  // (₹399) lives in hq.prodxstore.com/store; after payment the buyer is sent
+  // to /thank-you.html with the download.
+  PRODUCT: { label: '100,000+ AI Mega Prompts Pack', url: 'https://pay.prodxstore.com/checkout/ai-mega-prompts-pack' },
   // Per-visitor launch-price countdown, in minutes. The deadline is set the
   // moment a visitor first lands and persisted in localStorage, so it keeps
   // counting down across refreshes instead of resetting to this value every

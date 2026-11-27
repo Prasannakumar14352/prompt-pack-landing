@@ -1,3 +1,5 @@
+> **Update (Nov 2026):** checkout moved to pay.prodxstore.com at ₹399 and delivery is the on-page download in `thank-you.html`. The Razorpay Payment Page + Make.com steps below are legacy.
+
 # Delivery Setup — 100,000+ AI Mega Prompts Pack
 
 No backend, no database. Single product, single price (₹299). Delivery runs on: **one Razorpay Payment Page → Webhook → Make.com → Email**, plus an immediate on-page download on `thank-you.html`. This doc is the step-by-step to wire that up. Claude cannot create these accounts/scenarios for you — follow this manually.
